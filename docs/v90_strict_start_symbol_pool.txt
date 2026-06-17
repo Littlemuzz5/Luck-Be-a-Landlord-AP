@@ -1,0 +1,1 @@
+V90: Hard-strict start/Add Symbol pool. Effect-spawn helper symbols such as Seed, Turtle, Crab, fruit, gems, etc. are no longer placed into included_symbols while AP Checks are active or tracker boost is strict. When no real tracker symbol target exists, the PCK strips Add Symbol choices to Coin, Flower, Pearl, Cherry, Cat, and AP Check only.

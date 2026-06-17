@@ -1,0 +1,5 @@
+V28 fixes generation crash with floor_payment_checks: per_floor.
+- Shared Payment 1-12 locations are skipped in per-floor mode.
+- Rules now only call get_location('Payment X') when that shared location exists.
+- Floor X Payment Y locations still get their own rules.
+- Keeps V27 rare-pool/clean-client changes and V26 essence-only fix.

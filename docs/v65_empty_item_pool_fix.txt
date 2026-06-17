@@ -1,0 +1,6 @@
+V65 fixes crashes when category boost leaves an item rarity empty.
+- Adds AP_EMPTY_ITEM_POOL_FIX_V65 to Pop-up.tscn.
+- If common/uncommon/rare/very_rare item pools are empty, the game now creates a Missing AP Item placeholder instead of leaving card.data unset.
+- Runtime placeholder database entries are created if the generated mod did not load them yet.
+- The already-patched check now requires V65 so V64 installs are repatched rather than skipped.
+- Keeps V64 overflow/node fixes and V63 boost command fix.

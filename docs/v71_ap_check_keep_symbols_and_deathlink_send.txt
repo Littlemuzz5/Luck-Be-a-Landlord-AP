@@ -1,0 +1,1 @@
+V71: AP Check is weighted/prioritised without replacing the normal symbol pool. Also writes DeathLink send files before any normal Pop-up game_over event and /senddeath now force-enables local DeathLink for testing.

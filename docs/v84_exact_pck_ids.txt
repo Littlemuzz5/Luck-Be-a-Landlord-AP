@@ -1,0 +1,1 @@
+V84: Generated exact vanilla type ID maps from the uploaded Luck be a Landlord PCK JSON files. Symbols/items/essences now use IDs from res://JSON/Symbols - JSON.json, Items - JSON.json, and Essences - JSON.json. Examples fixed include Wealthy Capsule -> item_capsule, Matryoshka Doll -> matryoshka_doll_1, Geologist -> archaeologist, and Eldritch Creature -> eldritch_beast.

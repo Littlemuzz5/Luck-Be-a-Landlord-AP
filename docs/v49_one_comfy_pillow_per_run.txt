@@ -1,0 +1,5 @@
+V49 makes Comfy Pillow one-per-run.
+- Each generated AP floor starts with exactly one Comfy Pillow.
+- Comfy Pillow is removed from Add Item choice pools after that.
+- The live state no longer marks Comfy Pillow as an always-allowed random item.
+- This keeps the skip helper but stops stacking multiple Comfy Pillows in one run.

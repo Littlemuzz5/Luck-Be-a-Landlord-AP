@@ -1,0 +1,1 @@
+V81: Tightens symbol filtering so effect-spawn helper symbols and vanilla rarity-pool symbols do not leak into Add Symbol choices. Live/generated pools no longer add vanilla rarity content on top of tracker AP targets. Adds Piggy Bank item aliases and Cursed Katana Essence aliases so those tracker targets can appear/send correctly.

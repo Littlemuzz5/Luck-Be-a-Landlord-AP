@@ -1,0 +1,12 @@
+V21 fixes Item/Essence overlap and adds easy content-pack support.
+
+Item/Essence fix:
+- Normal Add Item screens now allow normal items only.
+- Essence screens now allow essences only.
+- Mixed forced-rarity screens no longer pull essences into normal item cards.
+
+Easy content support:
+- Add JSON manifests inside luck_be_a_landlord/mod_content/easy_packs/ before packaging the APWorld.
+- Players only need the finished APWorld and YAML; they do not need the original separate LBAL mod.
+- Supported fields: id, name, rarity, value, groups, description, texture.
+- Complex scripted effects are not supported by the easy system.

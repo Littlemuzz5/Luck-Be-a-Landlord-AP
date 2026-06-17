@@ -1,0 +1,5 @@
+V72 real symbol priority fix
+- AP Check still exists while AP Check locations remain.
+- AP Check is only injected into Add Symbol rewards when no real AP Symbol target is currently possible.
+- When a real AP Symbol target is possible, the live PCK filter injects that target into the rolled choice pool so it can appear even if the game rolled a lower rarity.
+- Added priority pools for symbols/items/essences in ap_state.json so currently possible tracker targets get preference without blocking vanilla/default fallback pools.

@@ -1,0 +1,5 @@
+V55 fixes dice symbols acting like flat coin symbols.
+- Three-Sided Die is forced to use vanilla type d3.
+- Five-Sided Die is forced to use vanilla type d5.
+- Dice face IDs like dice1/dice2/dice3/dice4/dice5 are treated as textures/faces, not AP choice symbols.
+- Live filtering canonicalizes bad dice aliases back to d3/d5 so the vanilla spin/random-value effect works.

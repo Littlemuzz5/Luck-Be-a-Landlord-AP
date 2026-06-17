@@ -1,0 +1,1 @@
+V156: Fix overlay labels showing literal \n on screen. Uses real GDScript newline escapes in overlay text and join() output. Patch marker AP_LIVE_POOL_PATCH_V156.

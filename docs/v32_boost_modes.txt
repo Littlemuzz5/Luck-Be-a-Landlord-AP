@@ -1,0 +1,7 @@
+V32 adds boost modes.
+- New YAML option: unlockable_chance_boost_mode.
+  Values: category, category_and_rarity.
+- category = old/current behavior: boost the active category only.
+- category_and_rarity = boost the active category AND the same rarity bucket.
+- Client command added: /boostmode category, /boostmode rarity, /boostmode auto, /boostmode status.
+- Keeps V31 defaults and rarity pool command, V30 floor payment logic, V29 DeathLink toggle-only, V28 generation fix, and V26 essence-only fix.

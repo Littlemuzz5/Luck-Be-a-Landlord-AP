@@ -1,0 +1,1 @@
+V20 fixes the V19 parse error caused by regex replacement eating backslashes in the embedded Pop-up.tscn GDScript. It also repairs older broken patched PCKs when upgrading.

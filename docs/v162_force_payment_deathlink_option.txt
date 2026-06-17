@@ -1,0 +1,1 @@
+V162: Adds force_payment_trap_counts_deathlink option. If false, Force Payment trap failures do not count toward outgoing DeathLink. The PCK writes force_payment_trap_active.json when the trap applies, and the client consumes that marker to ignore one nearby local DeathLink send. Default is true to preserve old behavior.

@@ -1,0 +1,5 @@
+V68 category-empty boost fix
+- Boost mode now treats Symbols, Items, and Essences as separate AP categories.
+- If the tracker has only Essence unlocks possible, Add Symbol and normal Add Item screens fall back to vanilla pools instead of showing Missing AP Symbol/Item placeholders.
+- Generated AP floors now include the full built-in symbol/item pool when that boost category is empty, so an empty category no longer collapses into placeholder cards.
+- ap_state.json now exposes essence_boost_pool_empty along with the existing symbol/item empty flags for the live PCK filter.

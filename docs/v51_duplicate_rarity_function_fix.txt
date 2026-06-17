@@ -1,0 +1,5 @@
+V51 fixes duplicate GDScript rarity helper parse errors.
+- Removes duplicate _ap_lbal_vanilla_rarity_for_current_screen functions when upgrading/repatching an already patched PCK.
+- Also dedupes the related placeholder helper functions.
+- Keeps V50 essence base rarity and V49 one Comfy Pillow per run.
+- Tested by patching the uploaded PCK twice; each helper remained once.

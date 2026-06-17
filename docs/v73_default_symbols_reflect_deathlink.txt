@@ -1,0 +1,1 @@
+V73: Add Symbol now shows only default starting symbols plus tracker-possible symbols. If no real AP symbol is possible, AP Check may appear; otherwise AP Check stays out. Receiving a DeathLink now also reflects one outgoing once, tagged as [Reflected DeathLink] to avoid infinite loops.

@@ -1,0 +1,5 @@
+V58 fixes dice roll animation behavior.
+- Keeps Three-Sided Die as d3 and Five-Sided Die as d5.
+- Stops mapping dice face texture IDs dice1-dice5 and d3_1-d3_3 back into d5/d3.
+- Allows the dice face texture IDs to stay available for the vanilla roll animation.
+- These face IDs are still not treated as separate AP choice symbols.

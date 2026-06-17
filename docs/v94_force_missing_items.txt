@@ -1,0 +1,1 @@
+V94: Forces Missing AP Item/Essence at the final card.data assignment, so vanilla items cannot reappear after the main card_pool filter. This fixes Mining Pick/Pink Pepper/etc. showing before any AP item is unlocked. Also touches icon_texture_database entries during description restore so item descriptions stop showing '?' where locked symbol icons are referenced.

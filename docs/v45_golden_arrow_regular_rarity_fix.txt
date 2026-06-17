@@ -1,0 +1,5 @@
+V45 fixes Golden Arrow and regular rarity defaults.
+- Golden/Silver/Bronze Arrow now include their vanilla directional variants so arrow effects can work properly.
+- Generic red-X missing placeholders now have descriptions again, without adding every symbol/item as placeholder scripts.
+- rare_very_rare_in_game_pool default is now off to avoid too many rare/very rare entries in regular mode.
+- regular boost mode now forces no focused_unlock while generating the mod.

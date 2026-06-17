@@ -1,0 +1,5 @@
+V27 changes:
+- Geologist is removed from Send checks when rare_checks is off.
+- Rare/Very Rare content disabled from AP checks is kept in the in-game pool as vanilla content.
+- Rare/Very Rare disabled content is not added as AP Unlock items/randomizer rewards.
+- Removed exposed client commands for DeathLink testing/toggling and the bridge folder lookup for this one-off build.

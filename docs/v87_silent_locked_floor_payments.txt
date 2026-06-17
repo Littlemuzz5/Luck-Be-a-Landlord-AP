@@ -1,0 +1,1 @@
+V87: Locked floor payment checks are silently ignored instead of logging every one. The run-state detector now falls back to the active unlocked AP floor if the game reports a locked visual floor, and the PCK only writes per-floor payment checks for floors listed as unlocked in ap_state.

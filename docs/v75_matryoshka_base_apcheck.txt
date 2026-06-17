@@ -1,0 +1,1 @@
+V75: Matryoshka Doll no longer expands Doll 2-5 into the Add Symbol pool. Only the base/default Matryoshka Doll appears; vanilla evolution should expose/send Send: Matryoshka Doll through Send: Matryoshka Doll 5 as the doll evolves. AP Check is available while AP Check locations remain, even if other tracker symbols are possible.

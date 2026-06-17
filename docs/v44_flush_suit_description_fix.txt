@@ -1,0 +1,4 @@
+V44 fixes suit icons in item descriptions such as Flush.
+- Adds icon-only suit scripts for Clubs, Spades, Hearts, and Diamonds.
+- These are only for description/icon lookup and are not added to included_symbols.
+- This should stop Flush descriptions from showing a ? where Clubs should be.

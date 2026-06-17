@@ -1,0 +1,10 @@
+V23 adds actual per-floor payment checks.
+
+YAML:
+  floor_payment_checks: per_floor
+
+Effects:
+- New seeds use Floor X Payment Y locations instead of shared Payment Y.
+- The patched PCK reads current_floor directly and queues Floor X Payment Y when rent is paid.
+- It also queues old Payment Y for compatibility with older/shared seeds; the client only sends locations that exist.
+- lbal_run_state.json now includes floor/payment/spins/rent_due for client-side tracking.

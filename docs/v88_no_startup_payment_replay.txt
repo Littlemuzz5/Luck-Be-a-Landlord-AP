@@ -1,0 +1,1 @@
+V88: Stops payment checks from replaying on client connect. Existing lbal_run_state.json and checks_to_send.json files from before the client started are marked stale/deleted, so reconnecting no longer sends every Floor 1 Payment. New payment files written after the client starts still send normally.

@@ -1,0 +1,5 @@
+V62 fixes remaining _2895537308 overflow spam.
+- DeathLink receive is confirmed working by the uploaded log showing AP DeathLink applied from Main process.
+- Adds guards to Main.tscn and Slot Icon.tscn modded extra-texture loops.
+- Stops the game from treating huge Workshop IDs as animation-frame digits.
+- Keeps V61 DeathLink receive restore and V60 safe icon loader.

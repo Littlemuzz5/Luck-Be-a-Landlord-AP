@@ -1,0 +1,1 @@
+V96: Reverts the V95 included-symbol icon loading change that caused locked symbols like Egg, Bubble, and Beer to appear at the start. Strict AP start symbols are restored: Coin, Flower, Pearl, Cherry, Cat, plus AP Check only until tracker-possible symbols exist. V95's no-item-before-unlocks fix remains.

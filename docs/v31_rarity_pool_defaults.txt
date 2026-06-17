@@ -1,0 +1,8 @@
+V31 changes:
+- extra_filler_checks default is now 50.
+- raspberry_pool default is now 20.
+- raspberry_required default is now 10.
+- Added YAML option rare_very_rare_in_game_pool.
+  When rare_checks/very_rare_checks are off, this controls whether those rarities still appear in-game as normal pool content without becoming AP checks/items.
+- Added client command /raritypool on/off/toggle/auto/status to override that in-game pool locally.
+- Keeps V30 floor payment logic, V29 DeathLink toggle-only behavior, V28 generation fix, and V26 essence-only fix.

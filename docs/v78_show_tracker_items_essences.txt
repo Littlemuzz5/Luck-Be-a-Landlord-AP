@@ -1,0 +1,1 @@
+V78: Symbols still respect real LBAL rarity so Diamond stays very rare, but tracker-possible Items and Essences are injected into Add Item/Add Essence choice buckets so they actually show when the tracker says they are possible. Essences are forced into the essence bucket.

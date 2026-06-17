@@ -1,0 +1,5 @@
+V53 fixes the V52 GDScript parse error.
+- V52 inserted ap_one_per_run_items.clear() without a tab inside _ap_lbal_update_state().
+- V53 inserts it with the correct indentation.
+- V53 also repairs already-patched PCKs that have the bad no-tab line.
+- Keeps Comfy Pillow in the pool until collected, then blocks it for the rest of the run.

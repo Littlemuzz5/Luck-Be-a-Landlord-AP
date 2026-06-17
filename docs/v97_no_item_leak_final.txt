@@ -1,0 +1,1 @@
+V97: The Add Item branch is intercepted at the main rarity-card branch, not just the later vanilla fallback. When the tracker has no AP item target, all three Add Item cards are forced to Missing AP Item, so peppers/mining pick/etc. cannot appear. The force check now reads email.type directly so it works on the real LBAL Pop-up email object.

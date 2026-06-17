@@ -1,0 +1,1 @@
+V164: Fixes Godot parse error from V163 in Slot Icon.tscn. The AP Check sender had an invalid backslash string in LOCALAPPDATA.replace(), causing Unexpected EOL at String. It now uses a properly escaped backslash and refreshes older/bad AP_CHECK_SEND_PATCH_V1/V163 slot patches.

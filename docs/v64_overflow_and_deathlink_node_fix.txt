@@ -1,0 +1,6 @@
+V64 forces the PCK to repatch and fixes the remaining log errors.
+- _pck_has_current_patch now requires V64 markers, so older patched PCKs are not incorrectly skipped as already patched.
+- Main.tscn and Slot Icon.tscn get AP_WORKSHOP_ID_OVERFLOW_GUARD_V64 so _2895537308 is not treated as an animation-frame digit.
+- Slot Icon.tscn uses a local suffix guard instead of calling /root/Main from off-tree nodes.
+- Pop-up.tscn gets AP_POPUP_SAFE_NODE_PATCH_V64 so AP helper functions do not call absolute /root/Main paths while off the scene tree.
+- Keeps V63 boost command fix and V61 DeathLink receive behavior.

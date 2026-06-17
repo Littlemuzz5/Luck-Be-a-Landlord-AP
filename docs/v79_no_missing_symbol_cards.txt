@@ -1,0 +1,1 @@
+V79: Missing AP Symbol is removed from generated mod scripts and stripped from Add Symbol pools. Missing AP Item/Essence placeholders remain for item/essence reward rarities with no AP target. AP Check remains available until all AP Check locations are completed, without unlocking the rest of the symbol pool.

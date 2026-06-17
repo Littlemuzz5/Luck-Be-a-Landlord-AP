@@ -1,0 +1,1 @@
+V86: Forces every loaded vanilla symbol, item, and essence database entry to use the exact LBAL localization name/description/text from the game files, even while the AP pool has that content locked/excluded. The live PCK reapplies this on state updates and choice filtering so generated AP placeholder text should not overwrite real descriptions.

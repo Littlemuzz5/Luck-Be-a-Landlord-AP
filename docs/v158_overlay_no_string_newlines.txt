@@ -1,0 +1,1 @@
+V158: Fixes the overlay parse error by removing all newline escape string literals from the embedded GDScript overlay. It uses char(10) instead, so Godot cannot split a quoted string and throw Unexpected EOL at String. Patch marker AP_LIVE_POOL_PATCH_V158.

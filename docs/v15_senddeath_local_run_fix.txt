@@ -1,0 +1,12 @@
+V15 senddeath local-run fix
+
+Fixes /senddeath sending to Archipelago but not ending the current Luck be a Landlord run.
+
+Cause:
+- The AP Bounce packet can be sent successfully without being echoed back to the sending client.
+- LBAL was waiting to receive its own DeathLink packet before writing deathlink_receive.json.
+- /testdeath worked because it wrote the local bridge file directly.
+
+Change:
+- /senddeath now writes the local deathlink_receive.json bridge file immediately, using the same path as /testdeath.
+- /senddeath still sends the DeathLink Bounce packet to Archipelago for other players.

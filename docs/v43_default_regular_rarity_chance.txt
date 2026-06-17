@@ -1,0 +1,6 @@
+V43 makes regular LBAL rarity chance the default.
+- unlockable_chance_boost remains off by default.
+- unlockable_chance_boost_mode default is now regular.
+- New /boostmode regular command.
+- regular mode does not focus/filter by category or rarity; it uses normal LBAL rarity chances.
+- category and category_and_rarity boosting are still available if the player wants them.

@@ -1,0 +1,4 @@
+V22 fixes vanilla effect references after AP live pool patching.
+- Dwarven Anvil now keeps Ore as its vanilla target instead of a question-mark placeholder.
+- Vanilla destroy-pair lookups keep internal IDs like wine/beer/ore/dwarf.
+- Patch marker upgraded so V21 patched PCKs are upgraded again.

@@ -1,0 +1,4 @@
+V63 fixes command processor argument crashes.
+- /boost now accepts extra command words without TypeError.
+- /boostmode, /raritypool, and /deathlink were made tolerant too.
+- Keeps V62 Workshop ID overflow guard and V61 DeathLink receive restore.

@@ -1,0 +1,5 @@
+V54 filters unsafe raw mod icon IDs.
+- Fixes errors like Cannot represent _2895537308 as integer and No loader found for res://icons/golem_2895537308.png.
+- Any symbol/item type ending in a huge numeric Workshop-style suffix is not injected into generated floor included/excluded/live pools unless it is provided safely.
+- This prevents Godot icon-loader overflow spam and missing resource spam.
+- Keeps V53 one-per-run Comfy Pillow and V51 duplicate rarity function fixes.

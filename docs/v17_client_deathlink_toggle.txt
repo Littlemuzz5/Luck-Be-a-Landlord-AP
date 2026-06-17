@@ -1,0 +1,12 @@
+V17 client DeathLink toggle
+
+Adds a runtime client command:
+  /deathlink status
+  /deathlink on
+  /deathlink off
+  /deathlink toggle
+  /deathlink auto
+
+/deathlink off disables incoming DeathLinks and failed-rent DeathLink sends in the LBAL client without needing a new YAML or seed. The setting is saved in the client bridge folder client_settings.json.
+
+/deathlink auto clears the local override and returns to the YAML/slot DeathLink option.

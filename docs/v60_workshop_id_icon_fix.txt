@@ -1,0 +1,6 @@
+V60 fixes Workshop-style icon load errors.
+- Adds a safe icon loader in Main.tscn that checks ResourceLoader.exists before load().
+- Blocks huge numeric suffix paths such as golem_2895537308.png from being loaded directly.
+- Falls back to missing.png or item_missing.png instead of causing ResourceLoader errors.
+- Removes the AP live pool updated log spam print.
+- Regenerates the Archipelago AP mod cleanly by clearing old generated .gd scripts.

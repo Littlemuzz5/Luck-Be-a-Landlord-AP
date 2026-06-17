@@ -1,0 +1,8 @@
+V67 fixes two issues.
+- Items now behave like symbols in boost mode: if category/category+rarity boost is enabled and there are no active item unlocks left, items return to the vanilla pool.
+- Generated AP floors stop excluding vanilla items when the active item boost pool is empty.
+- ap_state.json sets lock_normal_items false when the active item boost pool is empty.
+- The client tracker ignores the current LBAL floor if that AP floor has not been unlocked yet.
+- The client refuses to queue Floor X Payment Y checks from the game bridge if Floor X is still locked.
+- New seeds now default floor_unlock_mode to unlock_through_items, so Floor 5 Payment 1 requires Unlock Floor 5 unless the user explicitly chooses start_with_all.
+- Keeps V66 symbol boost fallback, V65 empty item pool fallback, and V64 overflow/node fixes.

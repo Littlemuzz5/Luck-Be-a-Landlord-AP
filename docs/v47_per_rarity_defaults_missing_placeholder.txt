@@ -1,0 +1,9 @@
+V47 rarity behavior changes:
+- unlockable_chance_boost_mode default is category_and_rarity.
+- Boost mode now only leaves AP unlocks in the live pool if their matching Send check is currently possible in logic.
+- The PCK keeps the rolled vanilla rarity instead of borrowing from another rarity when that rarity is empty.
+- If the rolled rarity has no valid AP symbol/item/essence, the game shows the red-X missing placeholder for that rarity.
+- Vanilla rarity tables used by the PCK are the provided values:
+  Symbols: 0=100/0/0/0, 1=90/10/0/0, 2=79/20/1/0, 3=74/25/1/0, 4=69/29/1.5/0.5, 5=68/30/1.5/0.5, 6+=60/35/3.5/1.5.
+  Items: 0=100/0/0/0, 1=90/10/0/0, 2=79/20/1/0, 3=74/25/1/0, 4=69/29/1.5/0.5, 5+=68/30/1.5/0.5.
+- Keeps V46 rare/very rare in the game pool at regular chance.

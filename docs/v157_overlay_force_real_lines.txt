@@ -1,0 +1,1 @@
+V157: overlay text boxes now convert any literal \n sequences into real line breaks before display. Also splits Big Bomb count onto its own overlay line. Patch marker AP_LIVE_POOL_PATCH_V157.

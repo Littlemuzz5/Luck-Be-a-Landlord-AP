@@ -1,0 +1,5 @@
+V46 keeps Rare/Very Rare in the game pool by default while using regular rarity chance.
+- rare_very_rare_in_game_pool default is back to on.
+- Rare/Very Rare content with checks off stays out of AP checks/items.
+- In regular boost mode, there is no focus, no weight boost, and no duplicate weighting.
+- Rare/Very Rare entries are added only once so vanilla rarity data controls their chance.

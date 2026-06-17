@@ -1,0 +1,1 @@
+V76: Missing AP Symbol is no longer generated as a choice. Add Symbol now falls back to real legal symbols only: AP Check while AP Check locations remain, default/start symbols, and currently AP-unlocked/tracker symbols. AP Check remains available until all AP Check locations are done and no longer unlocks the whole symbol pool.

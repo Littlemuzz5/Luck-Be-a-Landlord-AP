@@ -1,0 +1,3 @@
+V18 fixes Add Item screens showing Essence choices alongside normal items.
+Normal add-item rolls now stay in the item pool, while forced essence rewards still use the essence pool.
+It also prevents fallback rarity selection from choosing Essence on a normal Add Item screen.

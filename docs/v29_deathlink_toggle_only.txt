@@ -1,0 +1,3 @@
+V29 keeps the normal /deathlink on/off/status/toggle/auto command.
+Testing commands remain disabled: /senddeath and /testdeath.
+Keeps V28 per-floor generation fix, V27 rare-pool/clean-client changes, and V26 essence-only fix.

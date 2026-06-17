@@ -1,0 +1,5 @@
+V69 AP Check priority.
+- While any AP Check location is still missing, normal Add Symbol rewards prioritise AP Check over the AP symbol/unlock pool.
+- The live PCK patch reads live_pool.has_ap_checks / next_ap_check from ap_state.json and returns AP Check for all rarity buckets until AP Checks are fully cleared.
+- Generated AP floors also weight AP Check heavily while AP Checks remain.
+- Once every AP Check is sent/checked, AP Check is removed again and symbol/item/essence pools go back to the normal AP logic.

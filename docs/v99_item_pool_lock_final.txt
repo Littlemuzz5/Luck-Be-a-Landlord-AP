@@ -1,0 +1,1 @@
+V99: Stores a persistent ap_force_missing_item_pool_v99 flag after the Add Item pool is filtered. If Missing AP Item appears, every card in that Add Item screen is forced to Missing AP Item, even after LBAL erases the first chosen card from the pool. This blocks remaining early items such as Pink Pepper and Red Suits.

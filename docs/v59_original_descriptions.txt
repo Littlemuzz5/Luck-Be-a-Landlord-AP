@@ -1,0 +1,5 @@
+V59 restores original descriptions/names for vanilla content at runtime.
+- Uses the game's own translation keys (type_desc) for symbols/items/essences instead of copying wiki text.
+- Applies original descriptions to tile_database and item_database when the live AP pool updates.
+- Generic red-X/missing placeholders now explicitly behave as modded data so their custom descriptions show in tooltips.
+- Keeps V58 dice animation, V57 DeathLink sending, and V56 missing placeholder text fixes.

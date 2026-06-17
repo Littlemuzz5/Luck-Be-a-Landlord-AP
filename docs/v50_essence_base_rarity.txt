@@ -1,0 +1,5 @@
+V50 changes Essence rarity grouping.
+- Essence unlocks now use the rarity of their matching regular item/symbol for AP per-rarity boost logic.
+- Example: Quiver Essence follows Quiver's rarity.
+- Example: Black Suits Essence follows Black Suits' rarity.
+- This also updates the rare/very rare in-game-only essence pool to use base rarity.

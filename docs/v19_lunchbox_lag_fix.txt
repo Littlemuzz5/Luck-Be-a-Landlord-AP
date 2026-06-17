@@ -1,0 +1,1 @@
+V19 fixes Lunchbox and lag. Lunchbox forced food pools are narrowed to fruit for AP mode and the live symbol injector respects forced groups. Popup JSON polling is throttled so sections no longer stutter from repeated file reads.

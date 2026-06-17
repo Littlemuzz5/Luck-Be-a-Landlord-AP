@@ -1,0 +1,1 @@
+V165: fixes the Slot Icon AP Check sender parse error by using a correctly escaped backslash replacement string, changes AP_CHECK_SEND_MARKER to V165 so old v163/v164 Slot Icon patches refresh instead of being reused, and adds an explicit repair pass for already-patched bad Slot Icon.tscn text.

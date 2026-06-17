@@ -1,0 +1,1 @@
+V91: Hard-strict Add Item/Add Essence pool. Locked vanilla items like Tax Evasion and Treasure Map are removed when they are not currently possible in the AP tracker. If no AP item/essence is possible, the game shows Missing AP Item/Essence placeholders only.

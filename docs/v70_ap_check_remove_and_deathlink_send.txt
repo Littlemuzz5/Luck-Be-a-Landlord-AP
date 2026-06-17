@@ -1,0 +1,6 @@
+V70 AP Check removal + DeathLink send reliability.
+- AP Check is still prioritised while any AP Check locations remain.
+- After the final AP Check is queued/sent/checked, the client immediately rewrites ap_state.json and the generated mod with has_ap_checks=false.
+- The live PCK patch now strips ap_check out of Add Symbol pools when has_ap_checks=false, even if the PCK had already registered the AP Check symbol earlier in the run.
+- Re-enabled /senddeath and /testdeath commands for testing.
+- Outgoing DeathLink now also trusts an already-active DeathLink server tag, so stale option parsing should not block rent-failure DeathLinks.

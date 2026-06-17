@@ -1,0 +1,1 @@
+V83: Adds alias/database resolution for tracker targets so AP symbols/items/essences actually enter LBAL choice pools. Fixes examples including Piggy Bank, Cursed Katana Essence, Guillotine Essence, Oswald/Nori essences, Bar of Soap, Removal Capsule, Lucky Capsule, Pizza the Cat, and Pufferfish. The PCK now tries all alias IDs and keeps the one that exists in the live database.

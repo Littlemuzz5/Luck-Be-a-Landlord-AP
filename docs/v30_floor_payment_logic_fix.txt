@@ -1,0 +1,9 @@
+V30 fixes per-floor payment logic.
+
+- Floor X Payment Y now uses the same payment gating as shared Payment Y.
+- Floor X Payment Y also requires Floor X to be unlocked first.
+- In unlock_through_items mode, the first selected floor is open and later floors require Unlock Floor X.
+- In start_with_all mode, selected floors are treated as unlocked.
+- If progressive_ap_checks is off, each floor keeps its own local payment chain:
+  Floor X Payment 2 depends on Floor X Payment 1, not another floor's payment.
+- Keeps V29 DeathLink toggle-only commands, V28 generation fix, V27 rare-pool cleanup, and V26 essence-only fix.

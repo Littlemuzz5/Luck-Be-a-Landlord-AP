@@ -1,0 +1,1 @@
+V152: Renames the buff item wording from 'Buff: Choice of Symbols' to 'Buff: Choice of Symbols' while keeping the YAML weight key choice_symbols_buff_weight. Adds 'Buff: Start With an Essence Token' with start_essence_token_buff_weight. The new buff adds one starting essence token per received copy on generated AP floors and tries to apply immediately if received mid-run.

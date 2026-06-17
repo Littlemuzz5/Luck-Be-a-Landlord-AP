@@ -1,0 +1,1 @@
+V26 fixes item/essence mixing. Forced Essence rewards are essence-only and normal Add Item rewards are item-only. Based on V23, not V24/V25 mod support.

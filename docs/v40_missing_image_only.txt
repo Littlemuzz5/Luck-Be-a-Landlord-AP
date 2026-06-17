@@ -1,0 +1,4 @@
+V40 removes the per-symbol/per-item placeholder scripts from V36-V39.
+It is based on V35 plus one small change:
+- The generated mod writes the uploaded red-X image only to generic missing/question-mark fallback image filenames.
+- It does not add every symbol/item/essence as placeholder mod scripts.

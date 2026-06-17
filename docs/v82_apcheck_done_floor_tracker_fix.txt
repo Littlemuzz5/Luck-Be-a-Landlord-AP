@@ -1,0 +1,1 @@
+V82: AP Check is forcibly removed from live/generated pools once no AP Check locations remain in MissingLocations. next_ap_check is no longer written when AP Checks are done, and the PCK trusts live_pool.has_ap_checks=false over stale next_ap_check. Per-floor payment tracker now filters locked floors, so Floor 5 Payment 1 will not show until Floor 5 is unlocked.

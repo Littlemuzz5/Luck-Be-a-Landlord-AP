@@ -1,0 +1,5 @@
+V42 restores the original PCK on normal client close.
+- When the AP client exits normally, including closing the GUI window with X, it calls restore_original_lbal_pck().
+- This restores the backed-up original Luck be a Landlord.pck from the LBAL.Pck backup folder.
+- Added /restorepck command to restore manually without closing.
+- This cannot run if the process is killed, Windows crashes, or power is lost.

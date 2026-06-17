@@ -1,0 +1,5 @@
+V41 patches the actual PCK missing texture files.
+- Replaces res://.import/missing.png-*.stex with the uploaded red-X image.
+- Replaces res://.import/item_missing.png-*.stex with the uploaded red-X image.
+- This fixes inline description <icon_?> question marks.
+- This does not add every symbol/item/essence as placeholder mod scripts.

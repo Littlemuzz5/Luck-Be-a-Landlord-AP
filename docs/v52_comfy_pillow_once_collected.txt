@@ -1,0 +1,5 @@
+V52 changes Comfy Pillow behavior.
+- Comfy Pillow is no longer given as a starting item.
+- Comfy Pillow can appear in the item pool normally when AP/logic allows it.
+- After the player has collected Comfy Pillow in the current run, the live PCK filter removes it from later Add Item choices.
+- This prevents stacking multiple Comfy Pillows while still allowing the first one to be found normally.

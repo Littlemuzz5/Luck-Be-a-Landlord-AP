@@ -1,0 +1,1 @@
+V93: Hard gate for Add Item screens. The PCK now detects Add Item by card-pool contents too, not only email_type, and if there are no current AP item targets it returns Missing AP Item only. Essence targets no longer make normal Add Item allow vanilla items.

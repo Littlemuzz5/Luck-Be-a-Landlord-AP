@@ -1,0 +1,1 @@
+V153: Renames the YAML/code option to choice_symbols_buff_weight. The display/buff name remains Choice of Symbols. Kept backward compatibility for the old AP item/effect name when reading old rooms.

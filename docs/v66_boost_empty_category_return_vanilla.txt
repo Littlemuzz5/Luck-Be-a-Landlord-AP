@@ -1,0 +1,6 @@
+V66 fixes boost mode when a category has no possible symbols left.
+- If category/category+rarity boost is enabled and active symbol unlocks are empty, symbols stop being live-locked.
+- The generated AP floor no longer excludes vanilla symbols when the boost symbol category is empty.
+- Other categories can still stay boosted/locked.
+- This lets normal symbols come back after all symbol unlocks have been collected.
+- Keeps V65 empty item pool fix, V64 overflow/node fixes, and V63 boost command fix.

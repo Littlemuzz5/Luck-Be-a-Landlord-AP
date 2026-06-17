@@ -1,0 +1,1 @@
+V155: Fixes remaining Godot parse error "Unexpected EOL at String" from overlay label text. The label text strings now use escaped \\n in the embedded GDScript instead of real line breaks. Patch marker AP_LIVE_POOL_PATCH_V155.

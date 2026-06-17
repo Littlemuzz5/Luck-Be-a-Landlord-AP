@@ -1,0 +1,1 @@
+V95: Intercepts the main rarity selection branch before LBAL can rebuild vanilla item pools, so Add Item shows Missing AP Item only when no AP item target exists. Also keeps vanilla symbol/icon data loaded while still excluding locked symbols from choices, so normal item descriptions can render real icons instead of '?'.

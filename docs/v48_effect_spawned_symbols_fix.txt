@@ -1,0 +1,5 @@
+V48 fixes effect-created symbols mid-game.
+- Allows symbols created by vanilla item effects to exist on the generated AP floor.
+- Specifically fixes Grave Robber / Urn / Big Urn / Spirit style effects.
+- These symbols are not treated as AP choice unlocks; the live PCK filter still blocks them from Add Symbol choices until AP allows them.
+- Keeps V47 per-rarity boost and missing placeholder behavior.

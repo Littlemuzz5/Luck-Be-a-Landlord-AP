@@ -1,0 +1,8 @@
+V35 adds client-side DeathLink threshold overrides.
+- New client command: /deaththreshold status
+- New client command: /deaththreshold receive 2
+- New client command: /deaththreshold send 3
+- New client command: /deaththreshold auto
+- Overrides are stored in client_settings.json and do not require regenerating the YAML.
+- Changing thresholds resets partial receive/send counters so old counts do not instantly trigger.
+- /deathlink status now shows receive/send thresholds.

@@ -1,0 +1,1 @@
+V98: If Missing AP Item is present anywhere in an Add Item pool, the entire item choice pool is forced to Missing AP Item. This blocks remaining vanilla choices such as Pink Pepper and Red Suits before any AP item unlock exists. The Pop-up patch now rechecks the filtered card_pool itself, not only the AP state flags.

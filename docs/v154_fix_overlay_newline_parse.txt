@@ -1,0 +1,1 @@
+V154: Fixes Godot parse error "Unexpected EOL at String" in the in-game overlay. The overlay join string now uses escaped "\\n" so it does not split across two lines inside the embedded TSCN script. Also cleans the duplicate choice_symbols match pattern. Patch marker AP_LIVE_POOL_PATCH_V154.

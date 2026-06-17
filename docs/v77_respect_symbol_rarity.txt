@@ -1,0 +1,1 @@
+V77: Tracker symbols now respect native LBAL rarity. Rare/Very Rare symbols are no longer injected into every rolled rarity bucket and are not extra-weighted by unlockable chance boost. This fixes Diamond appearing far too often.

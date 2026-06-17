@@ -1,0 +1,6 @@
+V61 restores DeathLink receive reliability.
+- Upgrades the Main.tscn DeathLink receive patch to V61 even on already-patched PCKs.
+- Main now checks deathlink_receive.json from the bridge path first and forces game over without depending on the popup being open.
+- Pop-up receive no longer depends on stale ap_state deathlink_enabled; the AP client only writes receive files when a DeathLink should apply.
+- Client accepts incoming DeathLink if its DeathLink server tag is active, even if local option parsing is stale.
+- Keeps V60 safe icon loader and log-spam fix.

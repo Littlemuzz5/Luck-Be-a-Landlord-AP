@@ -1,0 +1,1 @@
+V80: Restores regular AP Check by ensuring/whitelisting ap_check while AP Check locations remain. Empty tracker Item/Essence categories no longer unlock vanilla content; they stay filtered and use Missing AP Item/Essence placeholders. Missing AP Symbol remains disabled.

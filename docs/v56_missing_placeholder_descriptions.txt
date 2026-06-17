@@ -1,0 +1,4 @@
+V56 adds descriptions to red-X missing placeholders.
+- Missing AP Symbol, Missing AP Item, and Missing AP Essence now get hover names/descriptions.
+- The generated mod scripts include text/localized_text/localized_descriptions.
+- The PCK also installs runtime fallback database entries, so descriptions still work if the generated mod script has not loaded yet.

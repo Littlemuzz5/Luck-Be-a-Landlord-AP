@@ -1,0 +1,1 @@
+V163: fixes multiple AP Check symbols destroying in the same spin. The Slot Icon AP Check sender now merges writes into checks_to_send.json and increments ap_check_next_count instead of overwriting the file. The client also counts aggregated AP Check destroy log lines such as '8 AP Check destroyed' as multiple sequential AP Check locations.

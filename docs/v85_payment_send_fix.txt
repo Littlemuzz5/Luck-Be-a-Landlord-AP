@@ -1,0 +1,1 @@
+V85: Fixes payments not sending, especially Floor 1 Payment 7. The client now detects payment progress from Add Item logs, coin drops, payment progress lines, and lbal_run_state.json. Per-floor payment seeds now queue Floor X Payment N rather than only shared Payment N.

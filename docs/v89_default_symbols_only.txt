@@ -1,0 +1,1 @@
+V89: Add Symbol now treats only Coin, Flower, Pearl, Cherry, Cat as default allowed symbols. slot_data/generated starting_symbols are no longer whitelisted, so locked common symbols like Crab cannot leak in. When only AP Checks are available, symbol choices are stripped to default symbols plus AP Check.

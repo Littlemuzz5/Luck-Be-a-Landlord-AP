@@ -1,0 +1,6 @@
+V57 fixes outgoing DeathLink from the LBAL game.
+- The game writes deathlink_send.json with enabled=true and a nonce when rent failure triggers game over.
+- The client de-dupes bridge/godot copies using the nonce so it only sends once.
+- The client now forces the DeathLink tag before sending a game-originated DeathLink.
+- The send threshold still works through /deaththreshold send N.
+- Receiving DeathLink behavior is unchanged.

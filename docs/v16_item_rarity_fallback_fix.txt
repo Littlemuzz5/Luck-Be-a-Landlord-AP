@@ -1,0 +1,1 @@
+V16 fixes Add Item screens showing item_missing question marks when AP-unlocked items such as Lemon or Triple Coins are allowed but vanilla rarity selection rolled an empty rarity after AP filtering. It upgrades old V12-V15 patched PCKs and keeps DeathLink/senddeath fixes.
