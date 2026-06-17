@@ -1,6 +1,8 @@
 # Luck-Be-a-Landlord-AP
 This is a mod for Luck be a Landlord which is connected to the Archipelgo to randomise everything in the game and connect to the servers of Archipelgo
 
+The Mod Also freezes alot when starting a new run just give it like 5 - 10 seconds and will load 
+
 Setup
 - Download the Archipelgo Launcher 0.6.7 or later client from https://github.com/ArchipelagoMW/Archipelago/releases
 - Install the AP world by placing it in your custom worlds folder or double clicking the AP world or by using the inbuilt install AP world in the Archipelgo Client
