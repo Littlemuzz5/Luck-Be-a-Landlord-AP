@@ -1,0 +1,32 @@
+{
+  "pack_id": "example_easy_pack",
+  "mod_name": "Example Easy Pack",
+  "symbols": [
+    {
+      "id": "ap_gold_apple",
+      "name": "Gold Apple",
+      "rarity": "rare",
+      "value": 5,
+      "groups": [
+        "fruit"
+      ],
+      "description": "Gives <icon_coin>5."
+    }
+  ],
+  "items": [
+    {
+      "id": "ap_golden_lunchbox",
+      "name": "Golden Lunchbox",
+      "rarity": "uncommon",
+      "description": "A simple AP-added item."
+    }
+  ],
+  "essences": [
+    {
+      "id": "ap_golden_lunchbox_essence",
+      "name": "Golden Lunchbox Essence",
+      "rarity": "essence",
+      "description": "Destroys itself after its effect."
+    }
+  ]
+}
