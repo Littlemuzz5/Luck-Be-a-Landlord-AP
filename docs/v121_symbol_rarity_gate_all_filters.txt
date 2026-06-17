@@ -1,0 +1,1 @@
+V121: Applies the symbol rarity gate to both Pop-up filter shapes. This prevents Very Rare metadata-loaded symbols such as Diamond from surviving in early Add Symbol rarity buckets while preserving default description/icon metadata.

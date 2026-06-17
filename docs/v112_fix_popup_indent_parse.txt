@@ -1,0 +1,1 @@
+V112: Fixes the Godot parse error caused by a malformed V100 Add Item branch in Pop-up.tscn. The body of 'if ap_force_missing_item_pool_v100:' is now correctly indented inside the match rarity '_' branch. The patch marker is AP_LIVE_POOL_PATCH_V112 and old markers are normalized during /repatch.

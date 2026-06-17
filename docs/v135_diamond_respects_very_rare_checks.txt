@@ -1,0 +1,4 @@
+V135: Diamond is no longer exempted from rare/very-rare Send check trimming.
+When very_rare_checks is off, Send: Diamond is disabled like other Very Rare symbols.
+Diamond can still remain in the normal in-game vanilla pool if rare_very_rare_in_game_pool is enabled; it just will not become an AP check.
+This affects generation/slot data, so existing rooms with Send: Diamond already generated need a regenerate/new room to remove that location.

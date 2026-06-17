@@ -1,0 +1,1 @@
+V143: Adds low/medium/high frequency tier OptionSets for individual buff and trap items. Weights are low=1, medium=3, high=6 inside the buff/trap filler replacement pools. Items not listed in a tier default to medium, and enabled_buffs/enabled_traps still control which items may appear.

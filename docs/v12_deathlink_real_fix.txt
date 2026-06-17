@@ -1,0 +1,11 @@
+V12 fixes DeathLink not doing anything.
+
+Client fix:
+- The client now reads deathlink from slot_data["options"] (the generated AP format) instead of only from a missing slot_data["deathlink"] dict.
+- Added /testdeath to write an incoming DeathLink directly to the game bridge for testing.
+
+PCK fix:
+- Bumped the PCK patch marker to V12 so older patched PCKs get upgraded instead of skipped.
+- Added a Main.tscn _process poller that reads deathlink_receive.json every 0.25 seconds.
+- Incoming DeathLink now forces the game-over popup from Main, even if Pop-up.update() is not running.
+- Failed rent still writes deathlink_send.json for the client to send.

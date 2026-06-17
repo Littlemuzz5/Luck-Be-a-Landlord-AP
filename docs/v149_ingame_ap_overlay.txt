@@ -1,0 +1,1 @@
+V149: Adds an in-game AP overlay. Left box shows AP/client text such as connection, next AP Check, and recent received items. Right box shows DeathLink deaths remaining before sending and floor goals finished/required. Client writes overlay data into ap_state.json and the Main.tscn PCK patch reads it live.

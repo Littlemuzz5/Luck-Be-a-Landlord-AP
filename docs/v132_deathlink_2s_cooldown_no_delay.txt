@@ -1,0 +1,1 @@
+V132: DeathLink local failed-payment sends are no longer delayed/buffered before the first send. The first trigger sends immediately, then duplicate local triggers from the PCK/Main/run-log fallbacks are suppressed for 2 seconds. Patch marker is AP_LIVE_POOL_PATCH_V132.

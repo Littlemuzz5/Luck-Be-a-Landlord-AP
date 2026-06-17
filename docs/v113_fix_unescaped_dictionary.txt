@@ -1,0 +1,1 @@
+V113: Fixes Godot parse error 'Unterminated dictionary'. A previous item-pool patch inserted a dictionary literal with raw quotes into the outer TSCN source string. The patcher now escapes that dictionary literal before repacking Pop-up.tscn. Patch marker is AP_LIVE_POOL_PATCH_V113.

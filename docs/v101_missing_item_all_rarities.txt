@@ -1,0 +1,1 @@
+V101: Missing AP Item is now duplicated across every item rarity when no AP item targets exist. This prevents LBAL from erasing the only Missing AP Item placeholder after the first card and then falling back to vanilla items such as Swear Jar or Lockpick. Also adds a no-item-targets guard immediately after card_pool filtering.

@@ -1,0 +1,5 @@
+V13 senddeath fix
+
+Fixed the LBAL client /senddeath command. The older command refused to send if ctx.tags had not already been updated to include DeathLink, so it could fail even when the YAML option was on. V13 forces the DeathLink tag update before sending the Bounce packet and accepts multi-word causes.
+
+Use: /senddeath optional cause text

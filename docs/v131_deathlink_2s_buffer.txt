@@ -1,0 +1,1 @@
+V131: Adds a two-second local DeathLink buffer/coalescer. All local failed-payment detectors (PCK bridge, Main failure fallback, and run-log fallback) now combine into one outgoing DeathLink after 2 seconds instead of racing and making extra attempts. Main.tscn also debounces deathlink_send.json writes for 2 seconds. Patch marker is AP_LIVE_POOL_PATCH_V131.

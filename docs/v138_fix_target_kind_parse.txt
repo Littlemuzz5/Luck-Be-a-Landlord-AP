@@ -1,0 +1,1 @@
+V138: Fixes Godot parse error target_kind not declared. V137 accidentally referenced target_kind inside _ap_lbal_remove_missing_symbol_cards_v79(), but that helper is symbol-only and outside _ap_lbal_filter_card_pool scope. It now uses "symbols" directly and upgrades already-patched PCKs. Patch marker is AP_LIVE_POOL_PATCH_V138.

@@ -1,0 +1,5 @@
+V10 generation fix
+
+V8/V9 made every symbol/item/essence unlock Useful-only. That broke Archipelago generation because Send: locations are gated by those unlocks, and Useful-only items are not used by the restrictive fill logic to open more locations.
+
+This build marks unlock rewards as Progression + Useful. They still carry the Useful flag, but AP can now use them for logic so the seed can fill normally.

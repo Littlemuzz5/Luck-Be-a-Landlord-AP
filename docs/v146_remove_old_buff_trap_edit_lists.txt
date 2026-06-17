@@ -1,0 +1,1 @@
+V146: Removes the old Enabled Buffs/Traps and Low/Medium/High Chance Buffs/Traps OptionSet edit-list fields from LuckOptions so the generator UI only shows the named individual buff/trap weight options. Each individual *_weight option can be set to none to disable that buff/trap.

@@ -1,0 +1,1 @@
+V134: Quiet repeated received-DeathLink no-reflect messages. Multiple hooks can notice the same received DeathLink game-over; the client now logs the no-reflect message at most once every 5 seconds, and also throttles duplicate received DeathLink queue log lines. Outgoing failed-payment DeathLink behavior is unchanged. Patch marker is AP_LIVE_POOL_PATCH_V134.

@@ -1,0 +1,1 @@
+V122: Adds icon-only item and essence scripts for vanilla description references, especially Red Suits/Black Suits. This fixes descriptions where symbol icons work but item self-icons such as <icon_red_suits> still show the red-X missing icon. These scripts load metadata/icons only and are not AP reward targets. Patch marker is AP_LIVE_POOL_PATCH_V122.

@@ -1,0 +1,1 @@
+V128: Clarifies and hardens DeathLink. Deaths caused by received DeathLinks are intentionally not reflected back out (prevents DeathLink loops) and now log that reason. Local failed-payment deaths still send; if the AP room is not ready the send is queued and retried after connection. Patch marker is AP_LIVE_POOL_PATCH_V128.

@@ -1,0 +1,1 @@
+V147: Fixes generation crash from V146 where _enabled_buff_items_v139/_enabled_trap_items_v139 called _option_set_v139 with the wrong arguments after removing the old edit-list options. They now correctly return all buff/trap items and individual *_weight options control none/low/medium/high.

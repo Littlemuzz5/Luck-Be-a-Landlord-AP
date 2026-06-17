@@ -1,0 +1,1 @@
+V136: In boost mode, if the current tracker targets for a category are only Rare/Very Rare, common and uncommon Add Symbol/Add Item buckets are left vanilla instead of being replaced or boosted by high-rarity checks. Rare/Very Rare buckets still boost/filter to the tracker targets. Patch marker is AP_LIVE_POOL_PATCH_V136.

@@ -1,0 +1,1 @@
+V133: DeathLink repeat fix. First local failed-payment DeathLink sends immediately, duplicate hooks within 2 seconds are ignored, and later deaths can send again. Removes permanent run-log GAME OVER dedupe, processes every new deathlink_send.json file, and resets Main's ap_main_failed_payment_sent_v130 flag when the failure popup closes/retry starts.

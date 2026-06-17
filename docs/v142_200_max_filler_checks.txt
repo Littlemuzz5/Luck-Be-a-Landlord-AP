@@ -1,0 +1,1 @@
+V142: Raises extra_filler_checks max back to 200 and expands AP Check locations to 200. Keeps the v141 starting_symbol_mode option and removes the old over-100 starting-symbol behavior.

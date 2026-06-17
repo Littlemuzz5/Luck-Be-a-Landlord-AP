@@ -1,0 +1,1 @@
+V102: The live/game choice pools now always use only the tracker-possible Send checks, instead of every received AP unlock. This fixes items like peppers, Lockpick, Pizza the Cat, etc. remaining in Add Item when the tracker only shows AP Checks and an Essence. If the tracker has no item Send check, live_pool.has_item_targets is false and Add Item is forced to Missing AP Item.

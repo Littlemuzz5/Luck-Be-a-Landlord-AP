@@ -1,0 +1,1 @@
+V130: Adds Main.tscn failure-popup polling so failed rent sends DeathLink even when the old game_over hook is missed. Received DeathLink game-overs mark a suppression flag so it will not reflect incoming DeathLinks. Patch marker is AP_LIVE_POOL_PATCH_V130.

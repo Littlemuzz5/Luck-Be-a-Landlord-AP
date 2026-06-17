@@ -1,0 +1,1 @@
+V145: Gives each individual buff/trap weight option its own display_name so the generator UI shows the buff/trap name, e.g. 'Half Money Trap Weight', instead of repeated generic 'Buff/Trap Weight'. The YAML names and behavior from V144 are unchanged.

@@ -1,0 +1,1 @@
+V11 fixes DeathLink receive to force the game-over popup immediately, writes DeathLink send files even with stale ap_state, and sends Payment checks directly when rent is paid.

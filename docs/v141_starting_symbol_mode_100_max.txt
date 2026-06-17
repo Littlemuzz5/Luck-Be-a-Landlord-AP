@@ -1,0 +1,1 @@
+V141: Adds starting_symbol_mode option. ap_checks starts AP floors with five AP Check symbols; starting_symbols starts with Coin, Flower, Pearl, Cherry, Cat and leaves AP Check in Add Symbol choices. Extra Filler Checks option is capped at 100 and slot_data max_ap_checks_supported is 100. Patch marker AP_LIVE_POOL_PATCH_V141.

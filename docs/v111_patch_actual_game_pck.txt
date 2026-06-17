@@ -1,0 +1,1 @@
+V111: Fixes patching the actual game PCK. The PCK finder now checks LBAL_PCK_PATH, %LOCALAPPDATA%/LuckBeALandlordAP/lbal_pck_path.txt written by /setpckpath, the current working directory, the client executable directory, parent folders, and Steam libraries. Added /pckpath and /setpckpath commands. Startup logs now show the exact PCK path being patched.

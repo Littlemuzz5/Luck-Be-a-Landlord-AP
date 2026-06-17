@@ -1,0 +1,1 @@
+V114: Fixes Godot parse error where ap_goal_floors was used before declaration. The live script now declares var ap_goal_floors = [], resets it on state update, and fills it from live_pool.goal_floors. The client writes goal_floors into live_pool. Patch marker is AP_LIVE_POOL_PATCH_V114.

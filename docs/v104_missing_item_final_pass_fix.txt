@@ -1,0 +1,1 @@
+V104: Fixes the final Missing AP Item pass to detect Missing AP Item even when card.data is not a plain Dictionary. It checks Dictionary type/id, Object-style type/id, and display/name text. If any Add Item card is Missing AP Item, or if there are no AP item targets, every visible Add Item card is replaced with Missing AP Item.

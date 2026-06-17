@@ -1,0 +1,1 @@
+V105: Uses the visible Missing AP Item card as the source of truth. After LBAL generates the Add Item screen, if any visible card is Missing AP Item, its data is copied to every Add Item card. This avoids relying on AP state flags or Dictionary-only card.data checks and blocks mixed screens such as Missing AP Item + Tax Evasion/Jack-o-Lantern.

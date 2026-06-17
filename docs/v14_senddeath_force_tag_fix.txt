@@ -1,0 +1,9 @@
+V14 senddeath force-tag fix
+
+Fixes /senddeath not working in the Luck be a Landlord AP client.
+
+Changes:
+- /senddeath no longer refuses just because ctx.tags has not updated yet.
+- /senddeath force-adds the DeathLink tag for this client session.
+- /senddeath sends ConnectUpdate before the DeathLink Bounce packet.
+- /senddeath sends the DeathLink Bounce with force=True, so slot_data parsing cannot block manual tests.

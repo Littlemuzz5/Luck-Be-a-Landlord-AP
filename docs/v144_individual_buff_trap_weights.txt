@@ -1,0 +1,1 @@
+V144: Adds one Choice option per buff/trap using values none, low, medium, high. This matches YAML like half_money_trap_weight: medium. enabled_buffs/enabled_traps still decide which effects are allowed at all; the new weight options decide how often each enabled effect appears. Weights are none=0, low=1, medium=3, high=6.

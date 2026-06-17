@@ -1,0 +1,1 @@
+V115: Fixes Godot parse error where final Add Item passes referenced 'rarity' after the original variable was out of scope. The final Missing AP Item fallback passes now use common rarity for fallback card data. Patch marker is AP_LIVE_POOL_PATCH_V115.

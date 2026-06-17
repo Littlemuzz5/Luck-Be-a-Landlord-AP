@@ -1,0 +1,1 @@
+V124: Pool Ball is no longer a safe fallback when no AP item target exists. It only appears when AP/tracker says Pool Ball is currently a real item target. The client now also uses current in-logic Send locations as live pool targets, so Pool Ball can enter the common Add Item pool when it is shown in the tracker. Patch marker is AP_LIVE_POOL_PATCH_V124.

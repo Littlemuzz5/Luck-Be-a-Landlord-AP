@@ -1,0 +1,1 @@
+V148: Fixes output-generation crash by removing old enabled_buffs/low_chance_buffs/etc and enabled_traps/low_chance_traps/etc from fill_slot_data options.as_dict. Those options were removed from LuckOptions in V146, so they could not be exported. The only remaining buff/trap controls are the named individual *_weight options; set a weight to none to disable that effect.

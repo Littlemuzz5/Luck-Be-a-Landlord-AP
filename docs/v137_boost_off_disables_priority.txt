@@ -1,0 +1,1 @@
+V137: Fixes /boost off not changing in-game odds. The live PCK priority injection for item/essence targets now only runs when boost_pool_mode is true. With /boost off, first chance sends immediately no priority boost; AP content remains governed by normal rarity/allowed filtering. Patch marker AP_LIVE_POOL_PATCH_V137.

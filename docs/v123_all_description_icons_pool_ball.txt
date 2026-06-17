@@ -1,0 +1,1 @@
+V123: Expands description icon metadata to all vanilla symbols, not only suits, so descriptions like Miner/Dog/Birdhouse Essence can resolve Ore/Big Ore/Toddler/Void Creature/etc. Also keeps Pool Ball as the first safe Add Item option when there are no AP item targets, with the other choices remaining Missing AP Item placeholders. Patch marker is AP_LIVE_POOL_PATCH_V123.

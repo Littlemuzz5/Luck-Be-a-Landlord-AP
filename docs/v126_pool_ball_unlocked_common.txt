@@ -1,0 +1,1 @@
+V126: Pool Ball is no longer a safe fallback, but if AP has actually unlocked Pool Ball it stays in the live common Add Item pool. The client adds received Unlock: Pool Ball to active item targets, has_item_targets becomes true for it, and the PCK injects pool_ball into the common bucket only when ap_allowed_items contains pool_ball. Patch marker is AP_LIVE_POOL_PATCH_V126.

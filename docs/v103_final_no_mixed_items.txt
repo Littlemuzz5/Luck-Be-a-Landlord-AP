@@ -1,0 +1,1 @@
+V103: Adds a final post-generation Add Item safety pass. After all cards are created, if any Add Item card is Missing AP Item, or if live_pool.has_item_targets is false, every visible Add Item card is replaced with Missing AP Item and saved_card_types is rewritten. This catches all remaining leak paths including prompts and saved card reuse.

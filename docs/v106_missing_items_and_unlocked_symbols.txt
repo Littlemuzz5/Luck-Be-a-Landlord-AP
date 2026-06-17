@@ -1,0 +1,1 @@
+V106: Missing AP Item uses exactly 3 placeholders per rarity and the final pass forces the first three Add Item cards to Missing AP Item when there are no AP item targets. Symbols now fall back to already-received AP symbols when no symbol Send checks are in the tracker; items/essences stay strict tracker-possible.

@@ -1,0 +1,1 @@
+V125: Replaces v123 all-vanilla-symbol icon metadata with a curated description-icon list to avoid workshop-style large numeric IDs like *_2895537308. Also clears unsafe generated icon scripts/art on /writemod.

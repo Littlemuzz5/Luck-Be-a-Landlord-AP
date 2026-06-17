@@ -1,0 +1,1 @@
+V151: Changes Trap: Add Dud Symbol to current-run only. It no longer adds starting Duds to every generated AP floor. If the trap is received while a run is open, the PCK patch tries to add/queue one Dud immediately. If received outside a run, it is consumed and ignored so it does not carry into future runs.

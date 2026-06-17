@@ -1,0 +1,1 @@
+V110: Fixes the real PCK-not-updating bug. LIVE_GDSCRIPT still contained a hardcoded AP_LIVE_POOL_PATCH_V76 marker, so new repatches could write/keep the wrong marker and fail current-patch detection. The patcher now inserts AP_LIVE_POOL_PATCH_V110 and normalizes any AP_LIVE_POOL_PATCH_V* marker inside Pop-up.tscn during /repatch.

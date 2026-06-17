@@ -1,0 +1,1 @@
+V100: Fixes the Add Item lock properly. The Pop-up patch now escapes inserted GDScript correctly and treats add_item_prompt the same as add_item. If the filtered item pool contains Missing AP Item, the whole screen is forced to Missing AP Item, so Purple/Pink Pepper, Pizza the Cat, Red Suits, etc. cannot leak before an AP item target exists.

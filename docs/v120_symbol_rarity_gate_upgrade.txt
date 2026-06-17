@@ -1,0 +1,1 @@
+V120: Robust upgrade for already-patched PCKs. Keeps V119's symbol rarity gate and also applies it when /repatch updates an existing AP-patched Pop-up.tscn. Prevents metadata/icon-loaded Very Rare symbols like Diamond from surviving in early common/uncommon Add Symbol buckets. Patch marker is AP_LIVE_POOL_PATCH_V120.
