@@ -1,6 +1,8 @@
 # Luck-Be-a-Landlord-AP
 This is a mod for Luck be a Landlord which is connected to the Archipelgo to randomise everything in the game and connect to the servers of Archipelgo
 
+This was made with the use of ai
+
 The Mod Also freezes alot when starting a new run just give it like 5 - 10 seconds and will load 
 
 Setup
