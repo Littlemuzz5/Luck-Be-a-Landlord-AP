@@ -1,4 +1,8 @@
 # Luck-Be-a-Landlord-AP
+
+The artwork was made by sterlia here's their discord <https://discord.com/users/657785465075662856>
+
+
 This is a mod for Luck be a Landlord which is connected to the Archipelgo to randomise everything in the game and connect to the servers of Archipelago
 
 This was made with the use of ai
