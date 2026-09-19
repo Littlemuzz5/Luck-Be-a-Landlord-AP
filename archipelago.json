@@ -1,9 +1,10 @@
 {
-  "game": "Luck be a Landlord",
-  "creator": "Littlemuz",
-  "authors": [
-    "Littlemuz"
-  ],
-  "world_version": "0.1.2",
-  "minimum_ap_version": "0.6.7"
+	"version": 1,
+	"compatible_version": 1,
+
+	"game": "Luck be a Landlord",
+	"minimum_ap_version": "0.6.7",
+	"maximum_ap_version": "0.7.0",
+	"world_version": "1.0.0",
+	"authors": ["Littlemuz"]
 }
