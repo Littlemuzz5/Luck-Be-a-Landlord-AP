@@ -32,18 +32,15 @@ ITEM_NAME_TO_ID = {
     "Unlock: Buffing Capsule": 19,
     "Unlock: Candy": 20, 
     "Unlock: Card Shark": 21,
-    "Unlock: Cat": 22,
     "Unlock: Cheese": 23, 
     "Unlock: Chef": 24,
     "Unlock: Chemical Seven": 25, 
-    "Unlock: Cherry": 26,
     "Unlock: Chick": 27, 
     "Unlock: Chicken": 28,
     "Unlock: Clubs": 29,
     "Unlock: Coal": 30,
     "Unlock: Coconut": 31,
     "Unlock: Coconut Half": 32,
-    "Unlock: Coin": 33,
     "Unlock: Comedian": 34,
     "Unlock: Cow": 35,
     "Unlock: Crab": 36,
@@ -62,7 +59,6 @@ ITEM_NAME_TO_ID = {
     "Unlock: Essence Capsule": 49,
     "Unlock: Farmer": 50,
     "Unlock: Five-Sided Die": 51,
-    "Unlock: Flower": 52,
     "Unlock: Frozen Fossil": 53,
     "Unlock: Gambler": 54,
     "Unlock: General Zaroff": 55,
@@ -113,7 +109,6 @@ ITEM_NAME_TO_ID = {
     "Unlock: Oyster": 104,
     "Unlock: Peach": 105,
     "Unlock: Pear": 106,
-    "Unlock: Pearl": 107,
     "Unlock: Pirate": 108,
     "Unlock: Pinata": 109,
     "Unlock: Present": 110,
@@ -408,14 +403,16 @@ ITEM_NAME_TO_ID = {
     "Removal Token": 396,
     "Reroll Token": 397,
     "Essence Token": 398,
+    "Starting Item": 411,
     
     "Half Money": 399,
     "Force Payment": 400,
     "Dud Symbol": 401,
 
     "Progressive Nothing": 402,
-    "Too Tiny to Resemble Something": 403,
-    "A Really Really Small Coin": 404,
+    "1 coin": 403,
+    "3 coins": 404,
+    "5 coins": 410,
 
     "Shiny Coin": 405,
 
@@ -426,7 +423,7 @@ ITEM_NAME_TO_ID = {
 # In our case, we will make a dictionary from item name to classification.
 DEFAULT_ITEM_CLASSIFICATIONS = {
 
-    "Shiny Coin": ItemClassification.progression,
+    "Shiny Coin": ItemClassification.progression_skip_balancing,
 
     "Progressive AP": ItemClassification.progression,
 
@@ -435,14 +432,16 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Removal Token": ItemClassification.useful,
     "Reroll Token": ItemClassification.useful,
     "Essence Token": ItemClassification.useful,
+    "Starting Item": ItemClassification.useful,
 
     "Half Money": ItemClassification.trap,
     "Force Payment": ItemClassification.trap,
     "Dud Symbol": ItemClassification.trap,
 
     "Progressive Nothing": ItemClassification.filler,
-    "Too Tiny to Resemble Something": ItemClassification.filler,
-    "A Really Really Small Coin": ItemClassification.filler,
+    "1 coin": ItemClassification.filler,
+    "3 coins": ItemClassification.filler,
+    "5 coins": ItemClassification.filler,
 
     "Floor 2 Unlock": ItemClassification.progression,
     "Floor 3 Unlock": ItemClassification.progression,
@@ -485,18 +484,15 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Unlock: Buffing Capsule": ItemClassification.progression,
     "Unlock: Candy": ItemClassification.progression,
     "Unlock: Card Shark": ItemClassification.progression,
-    "Unlock: Cat": ItemClassification.progression,
     "Unlock: Cheese": ItemClassification.progression,
     "Unlock: Chef": ItemClassification.progression,
     "Unlock: Chemical Seven": ItemClassification.progression,
-    "Unlock: Cherry": ItemClassification.progression,
     "Unlock: Chick": ItemClassification.progression,
     "Unlock: Chicken": ItemClassification.progression,
     "Unlock: Clubs": ItemClassification.progression,
     "Unlock: Coal": ItemClassification.progression,
     "Unlock: Coconut": ItemClassification.progression,
     "Unlock: Coconut Half": ItemClassification.progression,
-    "Unlock: Coin": ItemClassification.progression,
     "Unlock: Comedian": ItemClassification.progression,
     "Unlock: Cow": ItemClassification.progression,
     "Unlock: Crab": ItemClassification.progression,
@@ -515,7 +511,6 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Unlock: Essence Capsule": ItemClassification.progression,
     "Unlock: Farmer": ItemClassification.progression,
     "Unlock: Five-Sided Die": ItemClassification.progression,
-    "Unlock: Flower": ItemClassification.progression,
     "Unlock: Frozen Fossil": ItemClassification.progression,
     "Unlock: Gambler": ItemClassification.progression,
     "Unlock: General Zaroff": ItemClassification.progression,
@@ -566,7 +561,6 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Unlock: Oyster": ItemClassification.progression,
     "Unlock: Peach": ItemClassification.progression,
     "Unlock: Pear": ItemClassification.progression,
-    "Unlock: Pearl": ItemClassification.progression,
     "Unlock: Pirate": ItemClassification.progression,
     "Unlock: Pinata": ItemClassification.progression,
     "Unlock: Present": ItemClassification.progression,
@@ -843,8 +837,9 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
 LOCAL_FILLER_BUFF_TRAP_ITEMS = {
     # Normal filler
     "Progressive Nothing",
-    "Too Tiny to Resemble Something",
-    "A Really Really Small Coin",
+    "1 coin",
+    "3 coins",
+    "5 coins",
 
     # Buffs
     "Starting Symbol",
@@ -852,6 +847,7 @@ LOCAL_FILLER_BUFF_TRAP_ITEMS = {
     "Removal Token",
     "Reroll Token",
     "Essence Token",
+    "Starting Item",
 
     # Traps
     "Half Money",
@@ -897,6 +893,9 @@ def get_random_filler_item_name(world: LBALWorld) -> str:
     if world.options.StartMoney:
         buffs.append("$5 Starting Money")
 
+    if world.options.StartingItem:
+        buffs.append("Starting Item")
+
     if world.options.RemovalToken:
         buffs.append("Removal Token")
 
@@ -934,8 +933,9 @@ def get_random_filler_item_name(world: LBALWorld) -> str:
     # -------------------------
     normal_filler = [
         "Progressive Nothing",
-        "Too Tiny to Resemble Something",
-        "A Really Really Small Coin",
+        "1 coin",
+        "3 coins",
+        "5 coins",
     ]
 
     return world.random.choice(normal_filler)
@@ -947,6 +947,8 @@ def create_item_with_correct_classification(world: LBALWorld, name: str) -> LBAL
     # Note: This function's content could just be the contents of world.create_item in world.py directly,
     # but it seemed nicer to have it in its own function over here in items.py.
     classification = DEFAULT_ITEM_CLASSIFICATIONS[name]
+    if (name.startswith("Unlock: ") and classification & ItemClassification.progression):
+        classification = ItemClassification.progression_skip_balancing
 
     # It is perfectly normal and valid for an item's classification to differ based on the player's options.
     # In our case, Health Upgrades are only relevant to logic (and thus labeled as "progression") in hard mode.
@@ -983,16 +985,13 @@ def create_all_items(world: LBALWorld) -> None:
         world.create_item("Unlock: Bubble"),
         world.create_item("Unlock: Buffing Capsule"),
         world.create_item("Unlock: Candy"),
-        world.create_item("Unlock: Cat"),
         world.create_item("Unlock: Cheese"),
         world.create_item("Unlock: Chemical Seven"),
-        world.create_item("Unlock: Cherry"),
         world.create_item("Unlock: Chick"),
         world.create_item("Unlock: Clubs"),
         world.create_item("Unlock: Coal"),
         world.create_item("Unlock: Coconut"),
         world.create_item("Unlock: Coconut Half"),
-        world.create_item("Unlock: Coin"),
         world.create_item("Unlock: Crab"),
         world.create_item("Unlock: Crow"),
         world.create_item("Unlock: Cultist"),
@@ -1002,7 +1001,6 @@ def create_all_items(world: LBALWorld) -> None:
         world.create_item("Unlock: Egg"),
         world.create_item("Unlock: Essence Capsule"),
         world.create_item("Unlock: Five-Sided Die"),
-        world.create_item("Unlock: Flower"),
         world.create_item("Unlock: Gambler"),
         world.create_item("Unlock: Goldfish"),
         world.create_item("Unlock: Golem"),
@@ -1035,7 +1033,6 @@ def create_all_items(world: LBALWorld) -> None:
         world.create_item("Unlock: Owl"),
         world.create_item("Unlock: Oyster"),
         world.create_item("Unlock: Peach"),
-        world.create_item("Unlock: Pearl"),
         world.create_item("Unlock: Pinata"),
         world.create_item("Unlock: Present"),
         world.create_item("Unlock: Pufferfish"),
@@ -1231,11 +1228,12 @@ def create_all_items(world: LBALWorld) -> None:
 
 
     ]
-    shiny_coin_count = world.options.HowmanyShinyCoins.value
-    extra_coin_count = world.options.ExtraShinyCoins.value
+    if world.options.ShinyCoin:
+        shiny_coin_count = world.options.HowmanyShinyCoins.value
+        extra_coin_count = world.options.ExtraShinyCoins.value
 
-    for _ in range(shiny_coin_count + extra_coin_count):
-        itempool.append(world.create_item("Shiny Coin"))
+        for _ in range(shiny_coin_count + extra_coin_count):
+            itempool.append(world.create_item("Shiny Coin"))
 
     # Some items may only exist if the player enables certain options.
     # In our case, If the hammer option is enabled, the sixth item is the Hammer.
@@ -1483,30 +1481,14 @@ def create_all_items(world: LBALWorld) -> None:
 
     remaining_filler_count = needed_number_of_filler_items
 
-    if (
-        world.options.FloorDependentChecks
-        and needed_number_of_filler_items > 0
-    ):
-        # 90% of all generated filler/buff/trap copies
-        # are placed directly into this LBAL player's world.
-        local_filler_count = (
-            needed_number_of_filler_items * 90
-        ) // 100
+    if (world.options.FloorDependentChecks and needed_number_of_filler_items > 0):
+        local_filler_count = (needed_number_of_filler_items * 99) // 100
 
-        local_locations = list(
-            world.multiworld.get_unfilled_locations(
-                world.player
-            )
-        )
+        local_locations = list(world.multiworld.get_unfilled_locations(world.player))
 
         world.random.shuffle(local_locations)
 
-        if len(local_locations) < local_filler_count:
-            raise Exception(
-                "LBAL LOCAL FILL ERROR: "
-                f"Need {local_filler_count} local locations, "
-                f"but only have {len(local_locations)}."
-            )
+        if len(local_locations) < local_filler_count: raise Exception("LBAL LOCAL FILL ERROR: " f"Need {local_filler_count} local locations, "f"but only have {len(local_locations)}.")
 
         for _ in range(local_filler_count):
 
@@ -1514,16 +1496,10 @@ def create_all_items(world: LBALWorld) -> None:
 
             location = local_locations.pop()
 
-            location.place_locked_item(
-                filler_item
-            )
+            location.place_locked_item(filler_item)
 
-        remaining_filler_count -= (
-            local_filler_count
-        )
+        remaining_filler_count -= (local_filler_count)
 
-
-    # The remaining 10% goes through normal AP fill.
     itempool += [
         world.create_filler()
         for _ in range(remaining_filler_count)

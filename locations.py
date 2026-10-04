@@ -722,17 +722,7 @@ LOCATION_NAME_TO_ID = {
     "Effect: Farmer Boosts Watermelon": 697,
     "Effect: Farmer Boosts Seed Growing": 698,
     "Effect: Five-Sided Die Rolls": 699,
-    "Effect: Frozen Fossil Destroys Cultist": 700,
-    "Effect: Frozen Fossil Destroys Witch": 701,
-    "Effect: Frozen Fossil Destroys Hex of Destruction": 702,
-    "Effect: Frozen Fossil Destroys Hex of Draining": 703,
-    "Effect: Frozen Fossil Destroys Hex of Emptiness": 704,
-    "Effect: Frozen Fossil Destroys Hex of Hoarding": 705,
-    "Effect: Frozen Fossil Destroys Hex of Midas": 706,
-    "Effect: Frozen Fossil Destroys Hex of Tedium": 707,
-    "Effect: Frozen Fossil Destroys Hex of Thievery": 708,
-    "Effect: Frozen Fossil Transforms into Eldritch Creature": 709,
-    "Effect: Gambler gets Destroyed by Dice": 710,
+    "Effect: Five-Sided Die Destroys Gambler": 1119,
     "Effect: General Zaroff Destroys Robin Hood": 711,
     "Effect: General Zaroff Destroys Thief": 712,
     "Effect: General Zaroff Destroys Billionaire": 713,
@@ -838,7 +828,6 @@ LOCATION_NAME_TO_ID = {
     "Effect: Omelette Boosts Omelette": 814,
     "Effect: Owl Gives 1 more": 815,
     "Effect: Oyster adds Pearl": 816,
-    "Effect: Pear give 1 more Coin": 818,
     "Effect: Pirate Destroys Anchor": 819,
     "Effect: Pirate Destroys Beer": 820,
     "Effect: Pirate Destroys Coin": 821,
@@ -874,6 +863,7 @@ LOCATION_NAME_TO_ID = {
     "Effect: Tedium Capsule Destroys itself": 857,
     "Effect: Thief Removes Coin": 851,
     "Effect: Three-Sided Die Roll": 852,
+    "Effect: Three-Sided Die Destroys Gambler": 1118,
     "Effect: Time Capsule Destroys itself": 853,
     "Effect: Toddler Destroys Candy": 854,
     "Effect: Toddler Destroys Pinata": 855,
@@ -1175,6 +1165,16 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 
 def create_all_locations(world: LBALWorld) -> None:
     create_regular_locations(world)
+
+
+
+    enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
+
+    for floor_number in enabled_floors: 
+        floor_region = world.get_region(f"Floor {floor_number}")
+        floor_complete = LBALLocation(world.player, f"Floor {floor_number} Completed", None, floor_region,)
+        floor_complete.place_locked_item(items.LBALItem("Completed Floor", ItemClassification.progression, None, world.player,))
+        floor_region.locations.append(floor_complete)
 
 
 

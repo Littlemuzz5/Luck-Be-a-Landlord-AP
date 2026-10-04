@@ -171,6 +171,41 @@ class EssenceToken(DefaultOnToggle):
 
     display_name = "Essence Token Buff"
 
+class StartingItem(DefaultOnToggle):
+    """
+    This Makes it so you can start with more Items each run
+    """
+
+    display_name = "Starting Item Buff"
+
+
+class DeathlinkSendAmnesty(Range):
+    """
+    Number of local deaths to forgive before sending a DeathLink.
+
+    0 disables send amnesty.
+    """
+
+    display_name = "DeathLink Send Amnesty"
+
+    range_start = 0
+    range_end = 10
+    default = 0
+
+
+class DeathlinkReceiveAmnesty(Range):
+    """
+    Number of incoming DeathLinks to ignore before one affects you.
+
+    0 disables receive amnesty.
+    """
+
+    display_name = "DeathLink Receive Amnesty"
+
+    range_start = 0
+    range_end = 10
+    default = 0
+
 class Workshopmods(Toggle):
     """
     This will need to be able to send checks out because there is a chance it wont work
@@ -199,6 +234,17 @@ class Floors(OptionSet):
     }
 
     default = {"2", "3"}
+
+class GoalFloors(Range):
+    """
+    This is how many floors you will need to goal before goaling the game 
+    If Shiny Coins are on you will need it as well
+    """
+    display_name = 'Goal Floors'
+
+    range_start = 0
+    range_end = 20
+    default = 0
     
 
 
@@ -208,7 +254,7 @@ class FloorDependentChecks(Toggle):
 
     Send and Effect checks are across all enabled floors.
 
-    This forces an 90% local Fill
+    This forces an 99% local Fill
 
     Only for Asyncs with permission or Syncs byourself
 
@@ -251,6 +297,10 @@ class LBALOptions(PerGameCommonOptions):
     Floors: Floors
     Boost: Boost
     FloorDependentChecks: FloorDependentChecks
+    StartingItem: StartingItem
+    DeathlinkSendAmnesty: DeathlinkSendAmnesty
+    DeathlinkReceiveAmnesty: DeathlinkReceiveAmnesty
+    GoalFloors: GoalFloors
 
 
 
@@ -262,7 +312,11 @@ class LBALOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [Rare, VeryRare, Boost, ShinyCoin, HowmanyShinyCoins, ExtraShinyCoins],
+        [Rare, VeryRare, Boost],
+    ),
+    OptionGroup(
+        "Goaling Condition",
+        [ShinyCoin, HowmanyShinyCoins, ExtraShinyCoins, GoalFloors],
     ),
     OptionGroup(
         "Floors",
@@ -274,11 +328,11 @@ option_groups = [
     ),
     OptionGroup(
         "Buff Options",
-        [BuffChance, SymbolBomb, StartMoney, RemovalToken, RerollToken, EssenceToken],
+        [BuffChance, SymbolBomb, StartMoney, RemovalToken, RerollToken, EssenceToken, StartingItem],
     ),
     OptionGroup(
         "Deathlink",
-        [Deathlink, Payment],
+        [Deathlink, Payment, DeathlinkSendAmnesty, DeathlinkReceiveAmnesty],
     ),
     OptionGroup(
         "Doesn't Work",

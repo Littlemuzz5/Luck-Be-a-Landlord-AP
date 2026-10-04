@@ -15,23 +15,21 @@ if TYPE_CHECKING:
 
 HAS_KEY = Has("Key")  # Hmm, what could this be? A little foreshadowing perhaps? :) You'll find out if you keep reading!
 
+STARTING_SYMBOLS = {
+    "Cat",
+    "Coin",
+    "Flower",
+    "Pearl",
+    "Cherry",
+}
 
-def get_check_variants(
-    world: LBALWorld,
-    base_location_name: str,
-):
+
+def get_check_variants(world: LBALWorld, base_location_name: str,):
     if world.options.FloorDependentChecks:
-        enabled_floors = [1] + sorted(
-            int(floor)
-            for floor in world.options.Floors.value
-        )
+        enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
 
         for floor_number in enabled_floors:
-            location_name = (
-                f"Floor {floor_number} - "
-                f"{base_location_name}"
-            )
-
+            location_name = (f"Floor {floor_number} - "f"{base_location_name}")
             try:
                 yield world.get_location(location_name)
             except KeyError:
@@ -48,10 +46,23 @@ def set_all_rules(world: LBALWorld) -> None:
     # we need to define rules for our Entrances and Locations.
     # Note: Regions do not have rules, the Entrances connecting them do!
     # We'll do entrances first, then locations, and then finally we set our victory condition.
+    enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
 
+    for floor_number in enabled_floors:
+        floor_complete = world.get_location(f"Floor {floor_number} Completed")
+        world.set_rule(floor_complete, Has("Progressive AP", count=12))
     set_all_entrance_rules(world)
     set_all_location_rules(world)
     set_completion_condition(world)
+
+def get_required_goal_floors(world) -> int:
+    playable_floors = 1 + len(world.options.Floors.value)
+    configured = int(world.options.GoalFloors.value)
+    if configured > 0:
+        return min(configured, playable_floors)
+    if world.options.ShinyCoin.value:
+        return 0
+    return max(1, (playable_floors + 3) // 4)
 
 
 def set_all_entrance_rules(world: LBALWorld) -> None:
@@ -2162,9 +2173,7 @@ def set_all_location_rules(world: LBALWorld) -> None:
         if not base_location_name.startswith("Effect: "):
             continue
 
-        effect_text = base_location_name.removeprefix(
-            "Effect: "
-        )
+        effect_text = base_location_name.removeprefix("Effect: ")
 
         required_unlocks = []
 
@@ -2174,6 +2183,9 @@ def set_all_location_rules(world: LBALWorld) -> None:
                 continue
 
             base_name = item_name.removeprefix("Unlock: ")
+
+            if base_name in STARTING_SYMBOLS:
+                continue
 
             if re.search(rf"(?<!\w){re.escape(base_name)}(?!\w)", effect_text, re.IGNORECASE,):
                 required_unlocks.append(item_name)
@@ -2191,8 +2203,7 @@ def set_all_location_rules(world: LBALWorld) -> None:
 
         for location in get_check_variants(world, base_location_name,):
             world.set_rule(location, rule)
-
-
+            
     for item_name in world.item_name_to_id:
 
         if not item_name.startswith("Unlock: "):
@@ -2200,18 +2211,22 @@ def set_all_location_rules(world: LBALWorld) -> None:
 
         base_name = item_name.removeprefix("Unlock: ")
 
-        base_location_name = (f"Send: {base_name}")
+        if base_name in STARTING_SYMBOLS:
+            continue
+
+        base_location_name = f"Send: {base_name}"
 
         rule = Has(item_name)
 
         if base_name.endswith(" Essence"):
             rule = rule & payment_4
-        
+
         if locations.is_rare_or_very_rare(base_name):
             rule = rule & payment_4
 
-        for location in get_check_variants(world, base_location_name,):
-            world.set_rule(location, rule,)
+        for location in get_check_variants(world, base_location_name):
+            world.set_rule(location, rule)
+
             location.item_rule = (lambda item, required_item=item_name: not (item.player == world.player and item.name == required_item))
 
 
@@ -2256,7 +2271,15 @@ def set_completion_condition(world: LBALWorld) -> None:
     # For this, we can use world.set_completion_rule.
     # You can just set a completion condition directly like any other condition, referencing items the player receives:
     #world.set_completion_rule(HasAll("Sword", "Shield"))
-    world.set_completion_rule(Has("Shiny Coin", count=world.options.HowmanyShinyCoins.value,))
+
+    required_floors = get_required_goal_floors(world)
+    shiny_enabled = bool(world.options.ShinyCoin.value)
+    if shiny_enabled and required_floors > 0:
+        world.set_completion_rule(Has("Shiny Coin", count=world.options.HowmanyShinyCoins.value) & Has("Completed Floor", count=required_floors))
+    elif shiny_enabled:
+        world.set_completion_rule(Has("Shiny Coin", count=world.options.HowmanyShinyCoins.value))
+    else:
+        world.set_completion_rule(Has("Completed Floor", count=required_floors))
 
     # In our case, we went for the Victory event design pattern (see create_events() in locations.py).
     # So lets undo what we just did, and instead set the completion condition to:
