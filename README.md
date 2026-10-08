@@ -14,8 +14,9 @@ Setup
 - Install the AP world by placing it in your custom worlds folder or double clicking the AP world or by using the inbuilt install AP world in the Archipelgo Client
 - Go to Options Creator and find the Luck be a Landlord tab to make the .yaml file
 - Generate a seed by putting the yaml file in the players folder and clicking the Generate button in the Archipelgo Client
-- Run the generation in the local client with pressing host in the archipelgo Client or going here https://archipelago.gg/uploads 
-- Run the Luck be a Landlord Client and point it to the Luck be a Landlord exe file
+- Run the generation in the local client with pressing host in the archipelgo Client or going here https://archipelago.gg/uploads
+- Download the Patch file from the zip in the output file or the website in the patch section
+- Run the Open Patch Client and use the patch file you downloaded and click on your pck
 - Run Luck Be a Landlord from steam
 - Open up Archipelago menu
 - Put in the details in game with the port and player name and press connect
