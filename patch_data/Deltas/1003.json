@@ -1,0 +1,1 @@
+{"operations":[[462,462,"\tvar ap_hooks = get_node_or_null(\\\"/root/Main/AP Hooks\\\")\r\n\tif ap_hooks != null and ap_hooks.has_method(\\\"notify_symbol_removed_by_removal_token\\\"):\r\n\t\tap_hooks.notify_symbol_removed_by_removal_token(type)\r\n"]]}

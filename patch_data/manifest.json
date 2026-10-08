@@ -1,0 +1,71 @@
+{
+  "original_pck_sha256": "006db078ebc968fd6f08c43743fb13ba3adfbafc08d7fe3d52385c8520bd6fd4",
+  "expected_godot_pack_version": 1,
+  "added": {
+    "res://APClient.gd": {
+      "file": "AP_Files/APClient.gd",
+      "sha256": "844c6c1e0ead43a747cfcbe422884243673b7908415c1c0feff97b7cc7d123a2"
+    },
+    "res://APData.gd": {
+      "file": "AP_Files/APData.gd",
+      "sha256": "2a4417e03c7bbe41b4615e3e298d6362036b67cc327ef57b294e86138d640a3f"
+    },
+    "res://APDebugConsole.ps1": {
+      "file": "AP_Files/APDebugConsole.ps1",
+      "sha256": "f5473789ce002aa5ee6d976a3dad55e1639783866af1243ed827f2d7e4953ab1"
+    },
+    "res://APEffectData.gd": {
+      "file": "AP_Files/APEffectData.gd",
+      "sha256": "c2160f269113caf4ca41c7f3f1710a58ac9c8d1b2a4bf82f2081a57e70387b9a"
+    },
+    "res://APGameDebug.gd": {
+      "file": "AP_Files/APGameDebug.gd",
+      "sha256": "d1b68c37c2868c4ecb9c9fdd609927a3ac87b9e912813a51a0ea26d664cfa7aa"
+    },
+    "res://APHooks.gd": {
+      "file": "AP_Files/APHooks.gd",
+      "sha256": "65254cec413f322e9c9c43a74858d598ac778d015e934d290976e4b39984129a"
+    },
+    "res://APMenu.gd": {
+      "file": "AP_Files/APMenu.gd",
+      "sha256": "1885688de9064e49fe8a0dde5fdbc60cf0cbe7eace4a4e03edb37d981c256247"
+    },
+    "res://ap_check.png": {
+      "file": "AP_Files/ap_check.png",
+      "sha256": "d1a454c69ff7aec69f44ac83fbf2e58a14b49e13b0b5443ce264510b26c15c1b"
+    }
+  },
+  "modified": {
+    "res://Hover Icon.tscn": {
+      "delta": "Deltas/1003.json",
+      "original_sha256": "e2dda1e5b21148afe3a00130896b50389ee37859a2c1151ff5f5f6d8c7eee365",
+      "patched_sha256": "2cdbc5efe1eb6a5d0f37d5a1d2019233a389579ad38e5ed11dec0d40700a806e"
+    },
+    "res://JSON/Symbols - JSON.json": {
+      "delta": "Deltas/1011.json",
+      "original_sha256": "fb7e5b10de7cd26e092e6f9584f6a82710683d9921a0ec4336d1713b07011bb9",
+      "patched_sha256": "ef89463a1e93a8d347a03584b8232e3f2f25718d35e2311b76c5f57e72f5ab82"
+    },
+    "res://Main.tscn": {
+      "delta": "Deltas/1035.json",
+      "original_sha256": "8fc8547be296d731a504ad42fa3241443a79d7ba12827731063d1ca43957400a",
+      "patched_sha256": "dce4ba445a7ac6bc35942cf07e5fc5cf6141bd2247d25168087caf6100db0ea1"
+    },
+    "res://Pop-up.tscn": {
+      "delta": "Deltas/1067.json",
+      "original_sha256": "b15971ae576a42496d704f92f563b248af98233d574e7255279d1c6c5e93722c",
+      "patched_sha256": "3f3072c9889e614558e04b1af25f0b5ffd24219f95a5417922ef2f1cd3ccbddf"
+    },
+    "res://Slot Icon.tscn": {
+      "delta": "Deltas/1073.json",
+      "original_sha256": "7fc64be8f36008ba82173a150d3a471410b61b4e485e46f10a7cb5b5f3b50feb",
+      "patched_sha256": "966d9ed00ff6041cd3416cdcc6d893e1e96e2ca613d4e8f96e00d7925c007424"
+    },
+    "res://TT Button.tscn": {
+      "delta": "Deltas/1076.json",
+      "original_sha256": "bbe86f45a7b0cb3c78462b4d00a3e644080a29788ad59a8028751adb32596316",
+      "patched_sha256": "7a05198ed4d1cfeb4252c1b36d02d455ba713b49ac05005c6537d6e19a25fd63"
+    }
+  },
+  "removed": []
+}

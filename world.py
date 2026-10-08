@@ -5,6 +5,7 @@ from . import items, locations, regions, rules, web_world
 from . import options as LBAL_options
 import os
 import logging
+from .lbal_patch import write_lbal_patch
 
 
 
@@ -94,6 +95,9 @@ class LBALWorld(World):
                         "GoalFloors": rules.get_required_goal_floors(self),
                     }
         }
+
+    def generate_output(self, output_directory: str):
+        write_lbal_patch(self, output_directory)
 
     @staticmethod
     def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
