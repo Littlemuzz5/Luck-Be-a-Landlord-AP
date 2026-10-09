@@ -52,6 +52,18 @@ class LBALWorld(World):
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
         locations.create_all_locations(self)
+        
+        unfilled_locations = self.multiworld.get_unfilled_locations(self.player)
+
+        logging.info("========== ACTUAL LBAL LOCATIONS ==========")
+        logging.info(f"Total unfilled locations: {len(unfilled_locations)}")
+
+        for region in self.multiworld.get_regions(self.player):
+            count = sum(1 for location in region.locations if location.item is None)
+            if count:
+                logging.info(f"{region.name}: {count}")
+        logging.info("===========================================")
+
 
     def set_rules(self) -> None:
         rules.set_all_rules(self)
@@ -86,7 +98,6 @@ class LBALWorld(World):
                         "ShinyCoin": bool(self.options.ShinyCoin.value),
                         "HowmanyShinyCoins": int(self.options.HowmanyShinyCoins.value),
                         "ExtraShinyCoins": int(self.options.ExtraShinyCoins.value),
-                        "FloorDependentChecks": bool(self.options.FloorDependentChecks.value),
                         "EnabledFloors": [1, *sorted( int(floor) for floor in self.options.Floors.value),],
                         "DeathlinkSendAmnesty": int(self.options.DeathlinkSendAmnesty.value),
                         "DeathlinkReceiveAmnesty": int(self.options.DeathlinkReceiveAmnesty.value),
@@ -101,118 +112,18 @@ class LBALWorld(World):
 
     @staticmethod
     def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
-        # Trigger a regen in UT
         return slot_data
 
 
     def generate_early(self) -> None:
-
-        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
-        if re_gen_passthrough and self.game in re_gen_passthrough:
-            # Get the passed through slot data from the real generation
-            slot_data: dict[str, Any] = re_gen_passthrough[self.game]
-
-            slot_options: dict[str, Any] = slot_data.get("options", {})
-            # Set all your options here instead of getting them from the yaml
-            for key, value in slot_options.items():
-                opt: Optional[Option] = getattr(self.options, key, None)
-                if opt is not None:
-                    # You can also set .value directly but that won't work if you have OptionSets
-                    setattr(self.options, key, opt.from_any(value))
-
-        selected_floors = [1, *sorted(int(floor) for floor in self.options.Floors.value),]
-        if self.options.FloorDependentChecks:
-            send_effect_floors = selected_floors
-        else:
-            send_effect_floors = [1]
-
-        checks_per_floor = len(locations.get_enabled_send_effect_names(self))
-
-        if self.options.FloorDependentChecks:
-            floor_dependent_checks = (checks_per_floor * len(send_effect_floors))
-        else:
-            floor_dependent_checks = checks_per_floor
-
-        ap_checks = 150
-
-        payment_checks = len(selected_floors) * 12
-
-        total_checks = (floor_dependent_checks + ap_checks + payment_checks)
-
+        selected_floors = [1, *sorted(int(floor) for floor in self.options.Floors.value)]
+        payment_checks = sum(1 for floor in selected_floors for payment in range(1, 13) if f"Floor {floor} Payment {payment}" in self.location_name_to_id)
+        ap_checks = sum(1 for name in self.location_name_to_id if name.startswith("AP Check "))
+        total_checks = len(self.multiworld.get_locations(self.player))
         logging.info("========== LBAL DEBUG ==========")
         logging.info(f"Player: {self.player} - "f"{self.multiworld.player_name[self.player]}")
         logging.info(f"Selected floors: {selected_floors}")
-        logging.info(f"Send/Effect floors: {send_effect_floors}")
-        logging.info(f"Send/Effect checks: {checks_per_floor:,}")
         logging.info(f"Payment checks: {payment_checks:,}")
         logging.info(f"AP Checks: {ap_checks:,}")
         logging.info(f"Calculated total checks: {total_checks:,}")
         logging.info("================================")
-
-        if not self.options.FloorDependentChecks:
-            return
-
-
-            warning_text = (
-                "WARNING - FLOOR DEPENDENT CHECKS\n\n"
-
-                "Floor Dependent Checks is enabled.\n\n"
-
-                f"Enabled floors: "
-                f"{', '.join(str(floor) for floor in enabled_floors)}\n"
-
-                f"Number of floors: {len(enabled_floors)}\n\n"
-
-                f"Send/Effect checks per floor: {checks_per_floor:,}\n"
-                f"Floor-dependent Send/Effect checks: "
-                f"{floor_dependent_checks:,}\n\n"
-
-                f"Payment checks: {payment_checks:,}\n"
-                f"AP Checks: {ap_checks:,}\n\n"
-
-                f"TOTAL LBAL CHECKS: {total_checks:,}\n\n"
-
-                "IMPORTANT:\n"
-                "90% of generated filler, buffs and traps will be "
-                "kept local to Luck be a Landlord.\n\n"
-
-                "Using multiple floors can create thousands of checks "
-                "and may make generation take longer.\n\n"
-
-                "YES:\n"
-                "Continue generation with these settings.\n\n"
-
-                "NO:\n"
-                "Turn off Floor Dependent Checks and remove all extra "
-                "floors. Generation will continue with only Floor 1.\n\n"
-
-                "Do you want to continue with Floor Dependent Checks?"
-            )
-
-
-            # Windows interactive generator
-            if os.name == "nt":
-                import ctypes
-
-                MB_YESNO = 0x00000004
-                MB_ICONWARNING = 0x00000030
-
-                IDYES = 6
-
-                result = ctypes.windll.user32.MessageBoxW(
-                    0,
-                    warning_text,
-                    "Luck be a Landlord - Generation Warning",
-                    MB_YESNO | MB_ICONWARNING,
-                )
-
-                if result == IDYES:
-                    return
-            self.options.FloorDependentChecks.value = 0
-            self.options.Floors.value = set()
-
-            print(
-                "Luck be a Landlord: Floor Dependent Checks " 
-                "disabled by user. Continuing with Floor 1 only."
-            )
-            

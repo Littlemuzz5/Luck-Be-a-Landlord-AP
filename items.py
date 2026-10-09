@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
+import logging 
 
 if TYPE_CHECKING:
     from .world import LBALWorld
@@ -1455,50 +1456,16 @@ def create_all_items(world: LBALWorld) -> None:
     # In this function, we have created five or six items depending on whether the "hammer" option is enabled.
     # We *could* have a really complicated if-else tree checking the options again, but there is a better way.
     # We can compare the size of our itempool so far to the number of locations in our world.
-
-    # The length of our itempool is easy to determine, since we have it as a list.
     number_of_items = len(itempool)
 
-    number_of_unfilled_locations = len(
-        world.multiworld.get_unfilled_locations(world.player)
-    )
+    number_of_unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))
 
-    needed_number_of_filler_items = (
-        number_of_unfilled_locations - number_of_items
-    )
+    needed_number_of_filler_items = (number_of_unfilled_locations - number_of_items)
 
     if needed_number_of_filler_items < 0:
-        raise Exception(
-            f"LBAL ITEMPOOL OVERFLOW: "
-            f"{number_of_items} items for "
-            f"{number_of_unfilled_locations} locations "
-            f"({-needed_number_of_filler_items} too many)"
-        )
-
-    # --------------------------------------------------
-    # Fast floor-mode filler placement
-    # --------------------------------------------------
+        raise Exception(f"LBAL ITEMPOOL OVERFLOW: " f"{number_of_items} items for " f"{number_of_unfilled_locations} locations " f"({-needed_number_of_filler_items} too many)")
 
     remaining_filler_count = needed_number_of_filler_items
-
-    if (world.options.FloorDependentChecks and needed_number_of_filler_items > 0):
-        local_filler_count = (needed_number_of_filler_items * 99) // 100
-
-        local_locations = list(world.multiworld.get_unfilled_locations(world.player))
-
-        world.random.shuffle(local_locations)
-
-        if len(local_locations) < local_filler_count: raise Exception("LBAL LOCAL FILL ERROR: " f"Need {local_filler_count} local locations, "f"but only have {len(local_locations)}.")
-
-        for _ in range(local_filler_count):
-
-            filler_item = world.create_filler()
-
-            location = local_locations.pop()
-
-            location.place_locked_item(filler_item)
-
-        remaining_filler_count -= (local_filler_count)
 
     itempool += [
         world.create_filler()

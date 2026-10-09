@@ -12,7 +12,7 @@ _PACKAGE = __package__
 class LBALContentPatch(APProcedurePatch):
     
     game = "Luck be a Landlord"
-    patch_file_ending = ".appatch"
+    patch_file_ending = ".aplbal"
     result_file_ending = ".pck"
     hash = None
 
@@ -25,35 +25,25 @@ class LBALContentPatch(APProcedurePatch):
     def patch(self, target: str) -> None:
         """Install patched PCK into selected game folder, never into Downloads."""
         cls = type(self)
-        # Force the source picker on every patch operation.
         if hasattr(cls, "source_data"):
             delattr(cls, "source_data")
         cls.selected_pck_path = None
         staged = None
         try:
-            # First select the game PCK. Validate its name before any patching.
             original_data = cls.get_source_data_with_cache()
             original_path = cls.selected_pck_path
             if original_path.name.casefold() != "luck be a landlord.pck":
                 raise ValueError("Select Luck be a Landlord.pck from the game directory.")
             if not (original_path.parent / "Luck be a Landlord.exe").is_file():
                 raise ValueError("Selected PCK is not beside Luck be a Landlord.exe.")
-            # Make sure we don't clobber a preexisting backup.
             backup = original_path.with_name(original_path.name + ".bak")
             if backup.exists():
-                raise FileExistsError(
-                    "Backup already exists: " + str(backup) +
-                    ". Restore/remove it manually before patching again."
-                )
-            # Build and validate patched output BEFORE touching the installed game.
+                raise FileExistsError("Backup already exists: " + str(backup) + ". Restore/remove it manually before patching again.")
             import tempfile
-            with tempfile.NamedTemporaryFile(prefix=".lbal_pending_", suffix=".pck",
-                                             dir=original_path.parent, delete=False) as f:
-                staged = Path(f.name)
+            with tempfile.NamedTemporaryFile(prefix=".lbal_pending_", suffix=".pck", dir=original_path.parent, delete=False) as f: staged = Path(f.name)
             super().patch(str(staged))
             if not staged.is_file() or staged.stat().st_size < 1024:
                 raise RuntimeError("Patch did not produce a valid-sized PCK.")
-            # Detect external modifications made after the file picker returned.
             import hashlib
             if hashlib.sha256(original_path.read_bytes()).digest() != hashlib.sha256(original_data).digest():
                 raise RuntimeError("Original PCK changed while patching; no files replaced.")
@@ -64,7 +54,6 @@ class LBALContentPatch(APProcedurePatch):
                 os.replace(staged, original_path)
                 staged = None
             except Exception:
-                # Original file not replaced; retain backup for recovery.
                 raise
             print("LBAL patched game installed: " + str(original_path))
             print("Original backed up to: " + str(backup))
@@ -114,7 +103,7 @@ class LBALContentPatch(APProcedurePatch):
 
 def write_lbal_patch(world, output_directory):
     patch = LBALContentPatch(player=world.player, player_name=world.multiworld.player_name[world.player], seed_name=world.multiworld.seed_name, slot_data=world.fill_slot_data(),)
-    name = world.multiworld.get_out_file_name_base(world.player) + ".appatch"
+    name = (world.multiworld.get_out_file_name_base(world.player) + LBALContentPatch.patch_file_ending)
     patch.write(os.path.join(output_directory, name))
 
 
@@ -124,7 +113,7 @@ class LBALPatchExtension(APPatchExtension):
 
     @staticmethod
     def patch_lbal(caller, original_pck, manifest_name):
-        """Build the patched PCK using only files inside this .appatch."""
+        """Build the patched PCK using only files inside this .aplbal."""
         from . import pck_patch_engine as engine
 
         with tempfile.TemporaryDirectory(prefix="lbal_ap_patch_") as temp_dir:

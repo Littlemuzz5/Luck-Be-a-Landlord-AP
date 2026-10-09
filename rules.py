@@ -24,22 +24,16 @@ STARTING_SYMBOLS = {
 }
 
 
-def get_check_variants(world: LBALWorld, base_location_name: str,):
-    if world.options.FloorDependentChecks:
-        enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
+def get_check_variants(world, base_location_name):
+    location = world.multiworld.get_location(base_location_name, world.player) if base_location_name in {loc.name for loc in world.multiworld.get_locations(world.player)} else None
+    return [location] if location is not None else []
 
-        for floor_number in enabled_floors:
-            location_name = (f"Floor {floor_number} - "f"{base_location_name}")
-            try:
-                yield world.get_location(location_name)
-            except KeyError:
-                continue
 
-    else:
-        try:
-            yield world.get_location(base_location_name)
-        except KeyError:
-            return
+def get_check_variants(world, base_location_name):
+    return [location for location in world.multiworld.get_locations(world.player) if location.name == base_location_name]
+
+
+
 
 def set_all_rules(world: LBALWorld) -> None:
     # In order for AP to generate an item layout that is actually possible for the player to complete,

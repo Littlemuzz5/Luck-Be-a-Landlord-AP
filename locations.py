@@ -1118,33 +1118,12 @@ LOCATION_NAME_TO_ID = {
     "Send: Zaroff's Contract Essence": 1117,
 }
 
-    # --------------------------------------------------
-    # Automatically generate per-floor Send/Effect checks
-    # --------------------------------------------------
-
 BASE_SEND_EFFECT_LOCATION_NAMES = tuple(
     name
     for name in LOCATION_NAME_TO_ID
-    if (
-        name.startswith("Send: ")
-        or name.startswith("Effect: ")
-    )
+    if name.startswith(("Send: ", "Effect: "))
 )
 
-_next_location_id = max(LOCATION_NAME_TO_ID.values()) + 1
-
-for floor_number in range(1, 21):
-    for base_name in BASE_SEND_EFFECT_LOCATION_NAMES:
-
-        floor_location_name = (
-           f"Floor {floor_number} - {base_name}"
-        )
-
-        LOCATION_NAME_TO_ID[floor_location_name] = (
-            _next_location_id
-        )
-
-        _next_location_id += 1
 
 
 # Each Location instance must correctly report the "game" it belongs to.
@@ -1389,69 +1368,28 @@ def create_regular_locations(world: LBALWorld) -> None:
 
     Symbol_Send = world.get_region("Symbol Send")
 
-    enabled_floors = [1] + sorted(
-        int(floor)
-        for floor in world.options.Floors.value
-    )
+    enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
 
+    
+   
     for base_name in get_enabled_send_effect_names(world):
-
-
 
         if base_name.startswith("Send: "):
             check_text = base_name.removeprefix("Send: ")
         else:
             check_text = base_name.removeprefix("Effect: ")
 
-        # Rare disabled
         if not world.options.Rare:
-            if any(re.search(rf"(?<!\w){re.escape(name)}(?!\w)", check_text, re.IGNORECASE,) for name in rare_names):
+            if any(re.search(rf"(?<!\w){re.escape(name)}(?!\w)", check_text, re.IGNORECASE) for name in rare_names):
                 continue
 
         if not world.options.VeryRare:
-            if any(re.search(rf"(?<!\w){re.escape(name)}(?!\w)", check_text, re.IGNORECASE,) for name in very_rare_names):
+            if any(re.search(rf"(?<!\w){re.escape(name)}(?!\w)", check_text, re.IGNORECASE) for name in very_rare_names):
                 continue
-        # --------------------------------------------------
-        # Floor-dependent mode
-        # --------------------------------------------------
-        if world.options.FloorDependentChecks:
 
-            for floor_number in enabled_floors:
+        location = LBALLocation(world.player, base_name, world.location_name_to_id[base_name], Symbol_Send)
+        Symbol_Send.locations.append(location)
 
-                floor_region = world.get_region(
-                    f"Floor {floor_number}"
-                )
-
-                floor_location_name = (
-                    f"Floor {floor_number} - {base_name}"
-                )
-
-                location = LBALLocation(
-                    world.player,
-                    floor_location_name,
-                    world.location_name_to_id[
-                        floor_location_name
-                    ],
-                    floor_region,
-                )
-
-                floor_region.locations.append(location)
-
-        # --------------------------------------------------
-        # Original mode
-        # --------------------------------------------------
-        else:
-
-            location = LBALLocation(
-                world.player,
-                base_name,
-                world.location_name_to_id[
-                    base_name
-                ],
-                Symbol_Send,
-            )
-
-            Symbol_Send.locations.append(location)
     
 
     

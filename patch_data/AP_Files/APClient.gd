@@ -34,10 +34,6 @@ const DEFAULT_SHINY_COIN_REQUIRED = -1
 const DEFAULT_GOAL_FLOORS_REQUIRED = -1
 const MAX_TEXT_CLIENT_LINES = 30
 
-# Older / very large LBAL APWorlds can produce a Connected packet far larger
-# than Godot 3.4's default 64 KiB WebSocket input buffer. If that packet does
-# not fit, the AP server briefly sees the slot join and then leave while this
-# client remains stuck on RoomInfo. Use an explicit large buffer for AP traffic.
 const WS_INPUT_BUFFER_KB = 65536
 const WS_INPUT_MAX_PACKETS = 8192
 const WS_OUTPUT_BUFFER_KB = 1024
@@ -84,8 +80,7 @@ var handshake_detail = ""
 var handshake_stage_started_msec = 0
 var auth_wait_log_next_msec = 0
 
-# Local display/debug preferences. Old configs/PCK rooms have no values for
-# these and therefore keep the defaults below.
+
 var auto_goal_enabled = true
 var text_client_enabled = false
 # Feed filter modes:
@@ -117,17 +112,11 @@ var deathlink_enabled = false
 # 0 = Force Payment, 1 = End Run (matches options.py Payment Choice).
 var deathlink_mode = 1
 
-# DeathLink amnesty counts are local client options:
-# - send: ignore this many local losses before sending one DeathLink.
-# - receive: ignore this many incoming DeathLinks before applying one.
-# Both reset to the configured count after a DeathLink is actually sent/applied.
 var deathlink_send_amnesty = 0
 var deathlink_receive_amnesty = 0
 var deathlink_send_amnesty_remaining = 0
 var deathlink_receive_amnesty_remaining = 0
 
-# Runtime DeathLink state. LBAL may call its game-over path multiple times for a
-# single failed rent payment, so only the first callback for a run may send.
 var deathlink_send_handled_this_run = false
 var deathlink_remote_end_run_active = false
 var last_deathlink_received_time = -1.0

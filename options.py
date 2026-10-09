@@ -248,26 +248,6 @@ class GoalFloors(Range):
     
 
 
-class FloorDependentChecks(Toggle):
-    """
-    This was built with Ai use if you want
-
-    Send and Effect checks are across all enabled floors.
-
-    This forces an 99% local Fill
-
-    Only for Asyncs with permission or Syncs byourself
-
-    If your reading this your looking at the code
-    I made it for a joke with warnings built in
-    so it doesn't ruin anyones sync or async
-
-    At the end of the day be reasonable
-    """
-
-    display_name = "Floor Check sanity"
-    visibility = Visibility.none
-
 
 
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
@@ -296,7 +276,6 @@ class LBALOptions(PerGameCommonOptions):
     WorkshopmodsAbility: WorkshopmodsAbility
     Floors: Floors
     Boost: Boost
-    FloorDependentChecks: FloorDependentChecks
     StartingItem: StartingItem
     DeathlinkSendAmnesty: DeathlinkSendAmnesty
     DeathlinkReceiveAmnesty: DeathlinkReceiveAmnesty
@@ -338,9 +317,5 @@ option_groups = [
         "Doesn't Work",
         [Workshopmods, WorkshopmodsAbility],
     ),
-    OptionGroup(
-        "Ai made Sanitys",
-        [FloorDependentChecks],
-    )
 ]
 

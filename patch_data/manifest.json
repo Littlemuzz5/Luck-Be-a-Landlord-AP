@@ -1,14 +1,13 @@
 {
-  "original_pck_sha256": "006db078ebc968fd6f08c43743fb13ba3adfbafc08d7fe3d52385c8520bd6fd4",
   "expected_godot_pack_version": 1,
   "added": {
     "res://APClient.gd": {
       "file": "AP_Files/APClient.gd",
-      "sha256": "844c6c1e0ead43a747cfcbe422884243673b7908415c1c0feff97b7cc7d123a2"
+      "sha256": "9ec4440c230508cf41bbd3fc9f96e18120dab8377f3ead19ea0c5aebd89e1b93"
     },
     "res://APData.gd": {
       "file": "AP_Files/APData.gd",
-      "sha256": "2a4417e03c7bbe41b4615e3e298d6362036b67cc327ef57b294e86138d640a3f"
+      "sha256": "4c0bc04f4d7c1eb19d153b448e3b6f7e7a1a5a1d2811da5eeabb9c34335ef8e1"
     },
     "res://APDebugConsole.ps1": {
       "file": "AP_Files/APDebugConsole.ps1",

@@ -5420,12 +5420,6 @@ static func normalise_game_key(value):
 	return key
 
 static func canonical_game_key_for_actual_type(game_type):
-	# Convert a REAL LBAL database/icon type into the AP/public canonical key.
-	# Two capsule IDs are counter-intuitive in LBAL v1.2.24:
-	#   rarity_capsule -> Lucky Capsule
-	#   lucky_capsule  -> Wealthy Capsule
-	# This must stay separate from normalise_game_key(), because AP effect tables
-	# legitimately use `lucky_capsule` to mean the public Lucky Capsule.
 	var exact_key = exact_game_key(game_type)
 	match exact_key:
 		"rarity_capsule": return "lucky_capsule"
@@ -5441,10 +5435,6 @@ static func first_item_id_for_game_type(game_type):
 	return int(ids[0]) if ids.size() > 0 else -1
 
 static func send_location_ids_for_game_type(game_type):
-	# Matryoshka stages have separate Send: locations while sharing one Unlock.
-	# Preserve the exact internal stage BEFORE normalise_game_key() intentionally
-	# collapses every stage to matryoshka_doll.  exact_game_key() also strips the
-	# Steam/mod suffix, which used to make staged dolls fall back to the base Send.
 	var exact_key = exact_game_key(game_type)
 	if exact_key == "matryoshka_doll_1":
 		return GAME_KEY_TO_SEND_LOCATION_IDS.get("matryoshka_doll", []).duplicate()
