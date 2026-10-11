@@ -378,109 +378,104 @@ func _refresh_main_screen():
 	_refresh_apworld_version_label()
 
 func _layout_main_buttons():
-	# AP layout revision: exact 1680-style sizing/positioning at 1080p.
-	# Connection controls stay in one compact centered stack. Gameplay toggles use
-	# a two-column grid underneath so long amnesty labels never overlap.
+	# Lay out buttons using their actual on-screen sizes. Fixed row increments
+	# caused overlapping buttons when LBAL increased UI scaling at 2560x1440.
 	var connection_buttons = [server_button, slot_button, password_button, connect_button]
 	var toggle_buttons = [ap_check_boost_button, deathlink_button, deathlink_send_amnesty_button, deathlink_receive_amnesty_button, text_client_button, text_client_filter_button]
-
-	var connection_start_y = 190
-	var connection_spacing = 32
-	var toggle_gap = 14
-	var toggle_row_spacing = 38
-	var column_gap = 26
-	if options.resolution_y >= 720:
-		connection_start_y = int(round(options.resolution_y * 0.30))
-		connection_spacing = 38
-		toggle_gap = 18
-		toggle_row_spacing = 42
-		column_gap = 34
-
-	for i in range(connection_buttons.size()):
-		var button = connection_buttons[i]
+	var all_buttons = connection_buttons + toggle_buttons
+	for button in all_buttons:
 		if button == null or not is_instance_valid(button):
 			continue
 		button.change_size()
 		button.update_size()
 		button.correct_size()
-		button.rect_position = Vector2(
-			round(options.resolution_x / 2 - button.rect_size.x / 2),
-			connection_start_y + connection_spacing * i
-		)
-		button.base_x = button.rect_position.x
-		# This position is already calculated for the current resolution.
-		# Mark the current resolution as saved and do not rescale it again.
-		button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
-		button.aligned = false
 
-	# Size toggles first so the two columns can be centered using the actual
-	# widest label in each column. Text Client and Text Filter are centered on rows 3 and 4.
-	for button in toggle_buttons:
-		if button == null or not is_instance_valid(button):
-			continue
-		button.change_size()
-		button.update_size()
-		button.correct_size()
+	var screen_width = float(options.resolution_x)
+	var screen_height = float(options.resolution_y)
+	var gap = 6.0
+	var section_gap = 12.0
+	var column_gap = 26.0
+	if screen_height >= 720:
+		gap = 8.0
+		section_gap = 18.0
+		column_gap = 34.0
+
+	# Each line's height is the tallest button on that line, rather than a
+	# constant interval that can become smaller than the button itself.
+	var row_heights = []
+	for button in connection_buttons:
+		row_heights.append(button.rect_size.y if button != null and is_instance_valid(button) else 0.0)
+	for pair in [[0, 1], [2, 3]]:
+		var row_height = 0.0
+		for idx in pair:
+			var button = toggle_buttons[idx]
+			if button != null and is_instance_valid(button):
+				row_height = max(row_height, button.rect_size.y)
+		row_heights.append(row_height)
+	for idx in [4, 5]:
+		var button = toggle_buttons[idx]
+		row_heights.append(button.rect_size.y if button != null and is_instance_valid(button) else 0.0)
+
+	var group_height = 0.0
+	for height in row_heights:
+		group_height += height
+	group_height += gap * 6.0 + section_gap
+	# Leave room for the status text at the top and Back at the bottom.
+	var top_limit = 120.0
+	var bottom_limit = screen_height - 55.0
+	var start_y = max(top_limit, round(screen_height * 0.30))
+	if start_y + group_height > bottom_limit:
+		start_y = max(top_limit, round((top_limit + bottom_limit - group_height) / 2.0))
+
+	var y = start_y
+	for idx in range(connection_buttons.size()):
+		var button = connection_buttons[idx]
+		if button != null and is_instance_valid(button):
+			_place_ap_button(button, Vector2(round((screen_width - button.rect_size.x) / 2.0), round(y + (row_heights[idx] - button.rect_size.y) / 2.0)))
+		y += row_heights[idx] + gap
+	y += section_gap - gap
 
 	var left_width = 0.0
 	var right_width = 0.0
 	for idx in [0, 2]:
-		var b = toggle_buttons[idx]
-		if b != null and is_instance_valid(b):
-			left_width = max(left_width, b.rect_size.x)
+		var button = toggle_buttons[idx]
+		if button != null and is_instance_valid(button):
+			left_width = max(left_width, button.rect_size.x)
 	for idx in [1, 3]:
-		var b = toggle_buttons[idx]
-		if b != null and is_instance_valid(b):
-			right_width = max(right_width, b.rect_size.x)
-	var grid_width = left_width + column_gap + right_width
-	var left_x = round(options.resolution_x / 2 - grid_width / 2)
+		var button = toggle_buttons[idx]
+		if button != null and is_instance_valid(button):
+			right_width = max(right_width, button.rect_size.x)
+	var left_x = (screen_width - left_width - column_gap - right_width) / 2.0
 	var right_x = left_x + left_width + column_gap
-	var toggle_start_y = connection_start_y + connection_spacing * connection_buttons.size() + toggle_gap
-
-	for i in range(4):
-		var button = toggle_buttons[i]
-		if button == null or not is_instance_valid(button):
-			continue
-		var row = int(i / 2)
-		var x = left_x if i % 2 == 0 else right_x
-		# Center each button inside its column rather than left-aligning mixed widths.
-		var column_width = left_width if i % 2 == 0 else right_width
-		button.rect_position = Vector2(
-			round(x + (column_width - button.rect_size.x) / 2),
-			toggle_start_y + toggle_row_spacing * row
-		)
-		button.base_x = button.rect_position.x
-		# This position is already calculated for the current resolution.
-		# Mark the current resolution as saved and do not rescale it again.
-		button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
-		button.aligned = false
-
-	if text_client_button != null and is_instance_valid(text_client_button):
-		text_client_button.rect_position = Vector2(
-			round(options.resolution_x / 2 - text_client_button.rect_size.x / 2),
-			toggle_start_y + toggle_row_spacing * 2
-		)
-		text_client_button.base_x = text_client_button.rect_position.x
-		text_client_button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
-		text_client_button.aligned = false
-
-	if text_client_filter_button != null and is_instance_valid(text_client_filter_button):
-		text_client_filter_button.rect_position = Vector2(
-			round(options.resolution_x / 2 - text_client_filter_button.rect_size.x / 2),
-			toggle_start_y + toggle_row_spacing * 3
-		)
-		text_client_filter_button.base_x = text_client_filter_button.rect_position.x
-		text_client_filter_button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
-		text_client_filter_button.aligned = false
+	for row in range(2):
+		var height = row_heights[4 + row]
+		for column in range(2):
+			var button = toggle_buttons[row * 2 + column]
+			if button == null or not is_instance_valid(button):
+				continue
+			var x = left_x if column == 0 else right_x
+			var width = left_width if column == 0 else right_width
+			_place_ap_button(button, Vector2(round(x + (width - button.rect_size.x) / 2.0), round(y + (height - button.rect_size.y) / 2.0)))
+		y += height + gap
+	for idx in [4, 5]:
+		var button = toggle_buttons[idx]
+		var height = row_heights[idx + 2]
+		if button != null and is_instance_valid(button):
+			_place_ap_button(button, Vector2(round((screen_width - button.rect_size.x) / 2.0), round(y + (height - button.rect_size.y) / 2.0)))
+		y += height + gap
 
 	if back_button != null and is_instance_valid(back_button):
 		back_button.change_size()
 		back_button.update_size()
 		back_button.correct_size()
-		back_button.rect_position = Vector2(options.resolution_x - 8 - back_button.rect_size.x, options.resolution_y - 8 - back_button.rect_size.y)
-		back_button.base_x = back_button.rect_position.x
-		back_button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
-		back_button.aligned = false
+		_place_ap_button(back_button, Vector2(screen_width - 8.0 - back_button.rect_size.x, screen_height - 8.0 - back_button.rect_size.y))
+
+func _place_ap_button(button, position):
+	button.rect_position = position
+	button.base_x = position.x
+	# Avoid the base-game button script applying the resolution change twice.
+	button.saved_resolution = Vector2(options.resolution_x, options.resolution_y)
+	button.aligned = false
 
 func _set_button_text(button, text):
 	if button == null or not is_instance_valid(button):

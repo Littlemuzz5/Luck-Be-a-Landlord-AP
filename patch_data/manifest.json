@@ -27,7 +27,7 @@
     },
     "res://APMenu.gd": {
       "file": "AP_Files/APMenu.gd",
-      "sha256": "1885688de9064e49fe8a0dde5fdbc60cf0cbe7eace4a4e03edb37d981c256247"
+      "sha256": "af9b609d8885719e5a30f137351e13da3183d6f034ee4d290163e7f687b2af2f"
     },
     "res://ap_check.png": {
       "file": "AP_Files/ap_check.png",
@@ -43,27 +43,32 @@
     "res://JSON/Symbols - JSON.json": {
       "delta": "Deltas/1011.json",
       "original_sha256": "fb7e5b10de7cd26e092e6f9584f6a82710683d9921a0ec4336d1713b07011bb9",
-      "patched_sha256": "ef89463a1e93a8d347a03584b8232e3f2f25718d35e2311b76c5f57e72f5ab82"
+      "patched_sha256": "ef89463a1e93a8d347a03584b8232e3f2f25718d35e2311b76c5f57e72f5ab82",
+      "normalize_newlines": "lf"
     },
     "res://Main.tscn": {
       "delta": "Deltas/1035.json",
       "original_sha256": "8fc8547be296d731a504ad42fa3241443a79d7ba12827731063d1ca43957400a",
-      "patched_sha256": "dce4ba445a7ac6bc35942cf07e5fc5cf6141bd2247d25168087caf6100db0ea1"
+      "patched_sha256": "dce4ba445a7ac6bc35942cf07e5fc5cf6141bd2247d25168087caf6100db0ea1",
+      "normalize_newlines": "lf"
     },
     "res://Pop-up.tscn": {
       "delta": "Deltas/1067.json",
       "original_sha256": "b15971ae576a42496d704f92f563b248af98233d574e7255279d1c6c5e93722c",
-      "patched_sha256": "3f3072c9889e614558e04b1af25f0b5ffd24219f95a5417922ef2f1cd3ccbddf"
+      "patched_sha256": "3f3072c9889e614558e04b1af25f0b5ffd24219f95a5417922ef2f1cd3ccbddf",
+      "normalize_newlines": "lf"
     },
     "res://Slot Icon.tscn": {
       "delta": "Deltas/1073.json",
       "original_sha256": "7fc64be8f36008ba82173a150d3a471410b61b4e485e46f10a7cb5b5f3b50feb",
-      "patched_sha256": "966d9ed00ff6041cd3416cdcc6d893e1e96e2ca613d4e8f96e00d7925c007424"
+      "patched_sha256": "966d9ed00ff6041cd3416cdcc6d893e1e96e2ca613d4e8f96e00d7925c007424",
+      "normalize_newlines": "lf"
     },
     "res://TT Button.tscn": {
       "delta": "Deltas/1076.json",
       "original_sha256": "bbe86f45a7b0cb3c78462b4d00a3e644080a29788ad59a8028751adb32596316",
-      "patched_sha256": "7a05198ed4d1cfeb4252c1b36d02d455ba713b49ac05005c6537d6e19a25fd63"
+      "patched_sha256": "7a05198ed4d1cfeb4252c1b36d02d455ba713b49ac05005c6537d6e19a25fd63",
+      "normalize_newlines": "lf"
     }
   },
   "removed": []

@@ -65,6 +65,8 @@ def build_changes(source, indexed):
         original = read_resource(source, indexed[name])
         if digest(original) != record['original_sha256']:
             raise ValueError('Original resource differs: ' + name)
+        if record.get('normalize_newlines') == 'lf':
+            original = original.replace(b'\r\n', b'\n')
         lines = original.decode('utf-8').splitlines(keepends=True)
         operations = json.loads((ROOT / record['delta']).read_text(encoding='utf-8'))['operations']
         for start, end, replacement in reversed(operations):
