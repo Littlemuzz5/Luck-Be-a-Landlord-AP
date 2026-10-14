@@ -104,8 +104,43 @@ class LBALWorld(World):
                         "Rare": int(self.options.Rare.value),
                         "VeryRare": int(self.options.VeryRare.value),
                         "GoalFloors": rules.get_required_goal_floors(self),
+                        "Boost": bool(self.options.Boost.value),
+                        "Floors": sorted(str(floor) for floor in self.options.Floors.value),
                     }
         }
+
+    def _restore_tracker_options(self) -> None:
+        if not getattr(self.multiworld, "generation_is_fake", False):
+            return
+
+        passthrough = getattr(self.multiworld, "re_gen_passthrough", None) or {}
+        slot_data = passthrough.get(self.game, {})
+
+        if not isinstance(slot_data, dict):
+            return
+
+        saved = slot_data.get("options", {})
+
+        if not isinstance(saved, dict):
+            return
+
+        for name, value in saved.items():
+            if name not in LBAL_options.LBALOptions.__annotations__:
+                continue
+
+            try:
+                option_class = type(getattr(self.options, name))
+
+                if name == "Floors":
+                    value = [
+                        str(floor) for floor in value
+                        if str(floor) != "1"
+                    ]
+
+                setattr(self.options, name, option_class.from_any(value))
+
+            except (TypeError, ValueError, KeyError) as exc:
+                logging.warning("LBAL UT: cannot restore option %s=%r: %s", name, value, exc)
 
     def generate_output(self, output_directory: str):
         write_lbal_patch(self, output_directory)
@@ -116,6 +151,7 @@ class LBALWorld(World):
 
 
     def generate_early(self) -> None:
+        self._restore_tracker_options()
         selected_floors = [1, *sorted(int(floor) for floor in self.options.Floors.value)]
         payment_checks = sum(1 for floor in selected_floors for payment in range(1, 13) if f"Floor {floor} Payment {payment}" in self.location_name_to_id)
         ap_checks = sum(1 for name in self.location_name_to_id if name.startswith("AP Check "))
