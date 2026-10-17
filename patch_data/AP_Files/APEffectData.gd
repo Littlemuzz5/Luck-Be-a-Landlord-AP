@@ -1,10 +1,9 @@
 extends Reference
 
 # Generated from the AP effect location table.
-const EFFECT_RULE_COUNT = 357
+const EFFECT_RULE_COUNT = 338
 const EFFECT_RULES_BY_SOURCE = {
 	"amethyst": [
-		{"id": 530, "name": "Effect: Amethyst Gets Boosted", "source": "amethyst", "targets": [], "kind": "boost", "mode": "target_boost"},
 	],
 	"anchor": [
 		{"id": 531, "name": "Effect: Anchor is in the corner", "source": "anchor", "targets": [], "kind": "position"},
@@ -253,24 +252,13 @@ const EFFECT_RULES_BY_SOURCE = {
 		{"id": 1119, "name": "Effect: Five-Sided Die Destroys Gambler", "source": "five_sided_die", "targets": ["gambler"], "kind": "destroy"},
 	],
 	"frozen_fossil": [
-		{"id": 700, "name": "Effect: Frozen Fossil Destroys Cultist", "source": "frozen_fossil", "targets": ["cultist"], "kind": "destroy"},
-		{"id": 701, "name": "Effect: Frozen Fossil Destroys Witch", "source": "frozen_fossil", "targets": ["witch"], "kind": "destroy"},
-		{"id": 702, "name": "Effect: Frozen Fossil Destroys Hex of Destruction", "source": "frozen_fossil", "targets": ["hex_of_destruction"], "kind": "destroy"},
-		{"id": 703, "name": "Effect: Frozen Fossil Destroys Hex of Draining", "source": "frozen_fossil", "targets": ["hex_of_draining"], "kind": "destroy"},
-		{"id": 704, "name": "Effect: Frozen Fossil Destroys Hex of Emptiness", "source": "frozen_fossil", "targets": ["hex_of_emptiness"], "kind": "destroy"},
-		{"id": 705, "name": "Effect: Frozen Fossil Destroys Hex of Hoarding", "source": "frozen_fossil", "targets": ["hex_of_hoarding"], "kind": "destroy"},
-		{"id": 706, "name": "Effect: Frozen Fossil Destroys Hex of Midas", "source": "frozen_fossil", "targets": ["hex_of_midas"], "kind": "destroy"},
-		{"id": 707, "name": "Effect: Frozen Fossil Destroys Hex of Tedium", "source": "frozen_fossil", "targets": ["hex_of_tedium"], "kind": "destroy"},
-		{"id": 708, "name": "Effect: Frozen Fossil Destroys Hex of Thievery", "source": "frozen_fossil", "targets": ["hex_of_thievery"], "kind": "destroy"},
-		{"id": 709, "name": "Effect: Frozen Fossil Transforms into Eldritch Creature", "source": "frozen_fossil", "targets": ["eldritch_creature"], "kind": "transform"},
 	],
 	"gambler": [
-		{"id": 710, "name": "Effect: Gambler gets Destroyed by Dice", "source": "gambler", "targets": [], "kind": "destroy"},
 	],
 	"general_zaroff": [
 		{"id": 711, "name": "Effect: General Zaroff Destroys Robin Hood", "source": "general_zaroff", "targets": ["robin_hood"], "kind": "destroy"},
 		{"id": 712, "name": "Effect: General Zaroff Destroys Thief", "source": "general_zaroff", "targets": ["thief"], "kind": "destroy"},
-		{"id": 713, "name": "Effect: General Zaroff Destroys Billionare", "source": "general_zaroff", "targets": ["billionaire"], "kind": "destroy"},
+		{"id": 713, "name": "Effect: General Zaroff Destroys Billionaire", "source": "general_zaroff", "targets": ["billionaire"], "kind": "destroy"},
 		{"id": 714, "name": "Effect: General Zaroff Destroys Cultist", "source": "general_zaroff", "targets": ["cultist"], "kind": "destroy"},
 		{"id": 715, "name": "Effect: General Zaroff Destroys Toddler", "source": "general_zaroff", "targets": ["toddler"], "kind": "destroy"},
 		{"id": 716, "name": "Effect: General Zaroff Destroys Bounty Hunter", "source": "general_zaroff", "targets": ["bounty_hunter"], "kind": "destroy"},
@@ -416,7 +404,6 @@ const EFFECT_RULES_BY_SOURCE = {
 		{"id": 798, "name": "Effect: Moon Boosts Owl", "source": "moon", "targets": ["owl"], "kind": "boost"},
 		{"id": 799, "name": "Effect: Moon Boosts Rabbit", "source": "moon", "targets": ["rabbit"], "kind": "boost"},
 		{"id": 800, "name": "Effect: Moon Boosts Wolf", "source": "moon", "targets": ["wolf"], "kind": "boost"},
-		{"id": 801, "name": "Effect: Moon adds Cheese", "source": "moon", "targets": ["cheese"], "kind": "add"},
 	],
 	"mouse": [
 		{"id": 802, "name": "Effect: Mouse Destroys Cheese", "source": "mouse", "targets": ["cheese"], "kind": "destroy"},
@@ -448,7 +435,6 @@ const EFFECT_RULES_BY_SOURCE = {
 	"peach": [
 	],
 	"pear": [
-		{"id": 818, "name": "Effect: Pear give 1 more Coin", "source": "pear", "targets": ["coin"], "kind": "give", "mode": "target_boost"},
 	],
 	"pirate": [
 		{"id": 819, "name": "Effect: Pirate Destroys Anchor", "source": "pirate", "targets": ["anchor"], "kind": "destroy"},
@@ -484,7 +470,7 @@ const EFFECT_RULES_BY_SOURCE = {
 		{"id": 835, "name": "Effect: Robin Hood Makes Silver Arrow give 3 coins", "source": "robin_hood", "targets": ["silver_arrow"], "kind": "give"},
 		{"id": 836, "name": "Effect: Robin Hood Makes Golden Arrow give 3 coins", "source": "robin_hood", "targets": ["golden_arrow"], "kind": "give"},
 		{"id": 837, "name": "Effect: Robin Hood Makes Thief give 3 coins", "source": "robin_hood", "targets": ["thief"], "kind": "give"},
-		{"id": 838, "name": "Effect: Robin Hood Destroys Billionare", "source": "robin_hood", "targets": ["billionaire"], "kind": "destroy"},
+		{"id": 838, "name": "Effect: Robin Hood Destroys Billionaire", "source": "robin_hood", "targets": ["billionaire"], "kind": "destroy"},
 		{"id": 839, "name": "Effect: Robin Hood Destroys Target", "source": "robin_hood", "targets": ["target"], "kind": "destroy"},
 		{"id": 840, "name": "Effect: Robin Hood Destroys Apple", "source": "robin_hood", "targets": ["apple"], "kind": "destroy"},
 	],

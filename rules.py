@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-
+from worlds.generic.Rules import add_rule
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, Rule
+from rule_builder.rules import Has, HasAll, Rule, HasFromListUnique
 from . import locations
 import re
 
@@ -24,6 +24,43 @@ STARTING_SYMBOLS = {
 }
 
 
+def get_enabled_floors(world):
+    return [1] + sorted(int(floor) for floor in world.options.Floors.value)
+
+
+def get_enabled_symbol_unlocks(world):
+    symbols = []
+
+    for name in world.item_name_to_id:
+        if not name.startswith("Unlock Symbol: "):
+            continue
+
+        symbol = name.removeprefix("Unlock Symbol: ")
+
+        if not world.options.Rare.value:
+            if symbol in locations.rare_names:
+                continue
+
+        if not world.options.VeryRare.value:
+            if symbol in locations.very_rare_names:
+                continue
+        symbols.append(name)
+
+    return tuple(symbols)
+
+def get_payment_rule(world, floor, payment, symbols):
+    required_symbols = payment * SYMBOLS_PER_PAYMENT
+
+    if required_symbols > len(symbols):
+        raise ValueError(f"Payment {payment} requires {required_symbols} " f"symbols, but only {len(symbols)} are enabled.")
+
+    rule = Has("Progressive AP", count=payment)
+    if required_symbols > 0:
+        rule = rule & HasFromListUnique(*symbols, count=required_symbols)
+    if floor > 1:
+        rule = rule & Has(f"Floor {floor} Unlock")
+    return rule
+
 def get_check_variants(world, base_location_name):
     location = world.multiworld.get_location(base_location_name, world.player) if base_location_name in {loc.name for loc in world.multiworld.get_locations(world.player)} else None
     return [location] if location is not None else []
@@ -33,20 +70,32 @@ def get_check_variants(world, base_location_name):
     return [location for location in world.multiworld.get_locations(world.player) if location.name == base_location_name]
 
 
+def set_boost_location_rule(world: LBALWorld, location, rule: Rule) -> None:
+    world.set_rule(location, rule)
+
+    key = str(location.address)
+
+    world._lbal_boost_rule_objects[key] = rule
+    world._lbal_boost_location_rules[key] = rule.to_dict()
+
 
 
 def set_all_rules(world: LBALWorld) -> None:
+    world._lbal_boost_rule_objects = {}
+    world._lbal_boost_location_rules = {}
     # In order for AP to generate an item layout that is actually possible for the player to complete,
     # we need to define rules for our Entrances and Locations.
     # Note: Regions do not have rules, the Entrances connecting them do!
     # We'll do entrances first, then locations, and then finally we set our victory condition.
     enabled_floors = [1] + sorted(int(floor) for floor in world.options.Floors.value)
+    symbols = get_enabled_symbol_unlocks(world)
 
-    for floor_number in enabled_floors:
-        floor_complete = world.get_location(f"Floor {floor_number} Completed")
-        world.set_rule(floor_complete, Has("Progressive AP", count=12))
+    for floor in get_enabled_floors(world):
+        floor_complete = world.get_location(f"Floor {floor} Completed")
+        world.set_rule(floor_complete, get_payment_rule(world, floor, 12, symbols))
     set_all_entrance_rules(world)
     set_all_location_rules(world)
+    set_extra_effect_rules(world)
     set_completion_condition(world)
 
 def get_required_goal_floors(world) -> int:
@@ -201,6 +250,23 @@ def set_all_entrance_rules(world: LBALWorld) -> None:
     # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
     # you can make custom rules by subclassing CustomRule.
 
+
+SYMBOLS_PER_PAYMENT = 4
+
+
+def symbol_requirement(world, payment):
+    symbols = [
+        name
+        for name in world.item_name_to_id
+        if name.startswith("Unlock Symbol: ") and (world.options.Rare.value or name.removeprefix("Unlock Symbol: ") not in locations.rare_names) and (world.options.VeryRare.value or name.removeprefix("Unlock Symbol: ") not in locations.very_rare_names)
+    ]
+
+    return HasFromListUnique(
+        *symbols,
+        count=payment * SYMBOLS_PER_PAYMENT
+    )
+
+
 def set_all_location_rules(world: LBALWorld) -> None:
     # Location rules work no differently from Entrance rules.
     # Most of our locations are chests that can simply be opened by walking up to them.
@@ -219,18 +285,18 @@ def set_all_location_rules(world: LBALWorld) -> None:
     # First, let's make our sword condition.
     #can_defeat_basic_enemy: Rule = Has("Sword")
 
-    floor_1_payment_1: Rule = Has("Progressive AP", count=1)
-    floor_1_payment_2: Rule = Has("Progressive AP", count=2)
-    floor_1_payment_3: Rule = Has("Progressive AP", count=3)
-    floor_1_payment_4: Rule = Has("Progressive AP", count=4)
-    floor_1_payment_5: Rule = Has("Progressive AP", count=5)
-    floor_1_payment_6: Rule = Has("Progressive AP", count=6)
-    floor_1_payment_7: Rule = Has("Progressive AP", count=7)
-    floor_1_payment_8: Rule = Has("Progressive AP", count=8)
-    floor_1_payment_9: Rule = Has("Progressive AP", count=9)
-    floor_1_payment_10: Rule = Has("Progressive AP", count=10)
-    floor_1_payment_11: Rule = Has("Progressive AP", count=11)
-    floor_1_payment_12: Rule = Has("Progressive AP", count=12)
+    floor_1_payment_1: Rule = Has("Progressive AP", count=1) & symbol_requirement(world, 1)
+    floor_1_payment_2: Rule = Has("Progressive AP", count=2) & symbol_requirement(world, 2)
+    floor_1_payment_3: Rule = Has("Progressive AP", count=3) & symbol_requirement(world, 3)
+    floor_1_payment_4: Rule = Has("Progressive AP", count=4) & symbol_requirement(world, 4)
+    floor_1_payment_5: Rule = Has("Progressive AP", count=5) & symbol_requirement(world, 5)
+    floor_1_payment_6: Rule = Has("Progressive AP", count=6) & symbol_requirement(world, 6)
+    floor_1_payment_7: Rule = Has("Progressive AP", count=7) & symbol_requirement(world, 7)
+    floor_1_payment_8: Rule = Has("Progressive AP", count=8) & symbol_requirement(world, 8)
+    floor_1_payment_9: Rule = Has("Progressive AP", count=9) & symbol_requirement(world, 9)
+    floor_1_payment_10: Rule = Has("Progressive AP", count=10) & symbol_requirement(world, 10)
+    floor_1_payment_11: Rule = Has("Progressive AP", count=11) & symbol_requirement(world, 11)
+    floor_1_payment_12: Rule = Has("Progressive AP", count=12) & symbol_requirement(world, 12)
 
     floor_2_payment_1: Rule = Has("Progressive AP", count=1) & Has("Floor 2 Unlock")
     floor_2_payment_2: Rule = Has("Progressive AP", count=2) & Has("Floor 2 Unlock")
@@ -479,18 +545,20 @@ def set_all_location_rules(world: LBALWorld) -> None:
     floor_20_payment_11: Rule = Has("Progressive AP", count=11) & Has("Floor 20 Unlock")
     floor_20_payment_12: Rule = Has("Progressive AP", count=12) & Has("Floor 20 Unlock")
 
-    payment_1: Rule = Has("Progressive AP", count=1)
-    payment_2: Rule = Has("Progressive AP", count=2)
-    payment_3: Rule = Has("Progressive AP", count=3)
-    payment_4: Rule = Has("Progressive AP", count=4)
-    payment_5: Rule = Has("Progressive AP", count=5)
-    payment_6: Rule = Has("Progressive AP", count=6)
-    payment_7: Rule = Has("Progressive AP", count=7)
-    payment_8: Rule = Has("Progressive AP", count=8)
-    payment_9: Rule = Has("Progressive AP", count=9)
-    payment_10: Rule = Has("Progressive AP", count=10)
-    payment_11: Rule = Has("Progressive AP", count=11)
-    payment_12: Rule = Has("Progressive AP", count=12)
+
+    payment_1: Rule = Has("Progressive AP", count=1) & symbol_requirement(world, 1)
+    payment_2: Rule = Has("Progressive AP", count=2) & symbol_requirement(world, 2)
+    payment_3: Rule = Has("Progressive AP", count=3) & symbol_requirement(world, 3)
+    payment_4: Rule = Has("Progressive AP", count=4) & symbol_requirement(world, 4)
+    payment_5: Rule = Has("Progressive AP", count=5) & symbol_requirement(world, 5)
+    payment_6: Rule = Has("Progressive AP", count=6) & symbol_requirement(world, 6)
+    payment_7: Rule = Has("Progressive AP", count=7) & symbol_requirement(world, 7)
+    payment_8: Rule = Has("Progressive AP", count=8) & symbol_requirement(world, 8)
+    payment_9: Rule = Has("Progressive AP", count=9) & symbol_requirement(world, 9)
+    payment_10: Rule = Has("Progressive AP", count=10) & symbol_requirement(world, 10)
+    payment_11: Rule = Has("Progressive AP", count=11) & symbol_requirement(world, 11)
+    payment_12: Rule = Has("Progressive AP", count=12) & symbol_requirement(world, 12)
+
 
 
 
@@ -2173,10 +2241,10 @@ def set_all_location_rules(world: LBALWorld) -> None:
 
         for item_name in world.item_name_to_id:
 
-            if not item_name.startswith("Unlock: "):
+            
+            if not item_name.startswith(("Unlock Symbol: ", "Unlock Item: ", "Unlock Essence: ")):
                 continue
-
-            base_name = item_name.removeprefix("Unlock: ")
+            base_name = item_name.split(": ", 1)[1]
 
             if base_name in STARTING_SYMBOLS:
                 continue
@@ -2193,45 +2261,49 @@ def set_all_location_rules(world: LBALWorld) -> None:
             rule = rule & Has(item_name)
 
         if locations.is_rare_or_very_rare(effect_text):
-            rule = rule & payment_4
+            rule = rule & Has("Progressive AP", count=4)
 
-        for location in get_check_variants(world, base_location_name,):
-            world.set_rule(location, rule)
+        for location in get_check_variants(world, base_location_name):
+            set_boost_location_rule(world, location, rule)
             
+    
     for item_name in world.item_name_to_id:
 
-        if not item_name.startswith("Unlock: "):
+        if not item_name.startswith(("Unlock Symbol: ", "Unlock Item: ", "Unlock Essence: ")):
             continue
 
-        base_name = item_name.removeprefix("Unlock: ")
+        base_name = item_name.split(": ", 1)[1]
 
         if base_name in STARTING_SYMBOLS:
             continue
 
-        base_location_name = f"Send: {base_name}"
+        base_location_name = item_name.replace("Unlock ", "Send ", 1)
 
         rule = Has(item_name)
 
-        if base_name.endswith(" Essence"):
-            rule = rule & payment_4
+        if item_name.startswith("Unlock Essence: "):
+            rule = rule & Has("Progressive AP", count=4)
 
         if locations.is_rare_or_very_rare(base_name):
-            rule = rule & payment_4
+            rule = rule & Has("Progressive AP", count=4)
 
         for location in get_check_variants(world, base_location_name):
-            world.set_rule(location, rule)
+            set_boost_location_rule(world, location, rule)
 
             location.item_rule = (lambda item, required_item=item_name: not (item.player == world.player and item.name == required_item))
 
 
-    matryoshka_rule = Has("Unlock: Matryoshka Doll")
+
+    matryoshka_rule = Has("Unlock Symbol: Matryoshka Doll")
 
     for number in range(2, 6):
 
-        base_location_name = (f"Send: Matryoshka Doll {number}")
+        base_location_name = (f"Send Symbol: Matryoshka Doll {number}")
 
         for location in get_check_variants(world, base_location_name,):
-            world.set_rule(location, matryoshka_rule,)
+            set_boost_location_rule(world, location, matryoshka_rule)
+
+    
 
 
     # For the final boss, we also need to chain multiple conditions.
@@ -2258,6 +2330,21 @@ def set_all_location_rules(world: LBALWorld) -> None:
     # Finally, we apply the rule to our "Final Boss Defeated" event location.
     #final_boss = world.get_location("Final Boss Defeated")
     #world.set_rule(final_boss, can_defeat_final_boss)
+
+
+def set_extra_effect_rules(world: LBALWorld) -> None:
+    effect_rules = {"Effect: Big Urn adds Spirit": (Has("Unlock Symbol: Hooligan") | Has("Unlock Item: Grave Robber") | Has("Unlock Essence: Grave Robber Essence")),}
+    for effect_name, extra_rule in effect_rules.items():
+        for location in get_check_variants(world, effect_name):
+            key = str(location.address)
+            existing_rule = world._lbal_boost_rule_objects.get(key)
+            if existing_rule is not None:
+                combined_rule = existing_rule & extra_rule
+            else:
+                combined_rule = extra_rule
+            set_boost_location_rule(world, location, combined_rule)
+
+
 
 
 def set_completion_condition(world: LBALWorld) -> None:

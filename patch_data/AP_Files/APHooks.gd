@@ -11,7 +11,7 @@ const AP_CHECK_RARITY = "common"
 # Send/Effect checks, while leaving the five base starting symbols alone. Once a
 # category is complete its full unlocked pool is restored. Keep only a modest AP
 # Check weight so Common choices are not overwhelmed.
-const AP_CHECK_BOOST_WEIGHT = 3
+const AP_CHECK_BOOST_WEIGHT = 1
 
 # These are LBAL's normal base starting symbols. They stay available even if
 # their corresponding AP unlock item has not been received.
@@ -382,7 +382,7 @@ func _floor_variant_location_name(base_location_name):
 	var base_name = APData.base_send_effect_name(str(base_location_name))
 	if not _floor_dependent_checks_enabled():
 		return base_name
-	if not (base_name.begins_with("Send: ") or base_name.begins_with("Effect: ")):
+	if not (base_name.begins_with("Send Symbol: ") or base_name.begins_with("Send Item: ") or base_name.begins_with("Send Essence: ") or base_name.begins_with("Effect: ")):
 		return base_name
 	var floor_name = APData.floor_dependent_location_name(_current_ap_floor_number(), base_name)
 	return floor_name if floor_name != "" else base_name
@@ -394,7 +394,7 @@ func _floor_variant_location_id(base_location_id, base_location_name = ""):
 	if base_name == "":
 		base_name = APData.location_name(int(base_location_id))
 	base_name = APData.base_send_effect_name(base_name)
-	if not (base_name.begins_with("Send: ") or base_name.begins_with("Effect: ")):
+	if not (base_name.begins_with("Send Symbol: ") or base_name.begins_with("Send Item: ") or base_name.begins_with("Send Essence: ") or base_name.begins_with("Effect: ")):
 		return int(base_location_id)
 	var resolved = APData.floor_dependent_location_id(_current_ap_floor_number(), base_name)
 	return resolved if resolved >= 0 else int(base_location_id)
@@ -467,8 +467,9 @@ func _auto_register_send_checks_for_game_type(game_type, source_category):
 
 func _strip_unlock_prefix(value):
 	var s = str(value)
-	if s.begins_with("Unlock: "):
-		return s.substr(8, -1)
+	for prefix in ["Unlock Symbol: ", "Unlock Item: ", "Unlock Essence: ", "Unlock: "]:
+		if s.begins_with(prefix):
+			return s.substr(prefix.length(), -1)
 	return s
 
 func _normalise_display_key(value):
@@ -880,13 +881,104 @@ func _boost_symbol_available(game_type):
 		return false
 	return is_symbol_allowed_in_pool(pool_type)
 
+# Source-of-truth check reachability for newly generated seeds.
+# Archipelago's Connected packet only supplies CHECKED and MISSING locations;
+# it does not contain UT's in-logic list. The APWorld exports the identical
+# Rule Builder access conditions for Send/Effect checks in slot data instead.
+# Existing seeds without BoostLogic keep the old unlocked-check approximation.
+func _boost_has_exported_logic():
+	if ap_client == null:
+		return false
+	var data = ap_client.get("slot_data")
+	return typeof(data) == TYPE_DICTIONARY and typeof(data.get("BoostLogic", null)) == TYPE_DICTIONARY
+
+func _boost_rule_is_satisfied(rule):
+	if typeof(rule) != TYPE_DICTIONARY:
+		return false
+	# Future unsupported option-filter expressions must never mistakenly boost.
+	var filters = rule.get("options", [])
+	if typeof(filters) == TYPE_ARRAY and not filters.empty():
+		return false
+	var kind = str(rule.get("rule", ""))
+	var args = rule.get("args", {})
+	if typeof(args) != TYPE_DICTIONARY:
+		args = {}
+	if kind == "True_" or kind == "True":
+		return true
+	if kind == "False_" or kind == "False":
+		return false
+	if kind == "Has":
+		var item_name = str(args.get("item_name", ""))
+		var required_item_id = int(APData.ITEM_NAME_TO_ID.get(item_name, -1))
+		return required_item_id >= 0 and _count_received_ap_item(required_item_id) >= int(args.get("count", 1))
+	if kind == "And" or kind == "Or":
+		var children = rule.get("children", [])
+		if typeof(children) != TYPE_ARRAY or children.empty():
+			return false
+		if kind == "And":
+			for and_child in children:
+				if not _boost_rule_is_satisfied(and_child):
+					return false
+			return true
+		for or_child in children:
+			if _boost_rule_is_satisfied(or_child):
+				return true
+		return false
+	if kind == "HasAll" or kind == "HasAny":
+		var names = args.get("item_names", [])
+		if typeof(names) != TYPE_ARRAY:
+			return false
+		if kind == "HasAll":
+			for all_item_name in names:
+				var all_id = int(APData.ITEM_NAME_TO_ID.get(str(all_item_name), -1))
+				if all_id < 0 or _count_received_ap_item(all_id) < 1:
+					return false
+			return true
+		for any_item_name in names:
+			var any_id = int(APData.ITEM_NAME_TO_ID.get(str(any_item_name), -1))
+			if any_id >= 0 and _count_received_ap_item(any_id) > 0:
+				return true
+		return false
+	if kind == "HasFromListUnique" or kind == "HasFromList":
+		var names = args.get("item_names", [])
+		if typeof(names) != TYPE_ARRAY:
+			return false
+		var owned = 0
+		for counted_item_name in names:
+			var counted_id = int(APData.ITEM_NAME_TO_ID.get(str(counted_item_name), -1))
+			if counted_id >= 0:
+				if kind == "HasFromListUnique":
+					owned += min(1, _count_received_ap_item(counted_id))
+				else:
+					owned += _count_received_ap_item(counted_id)
+		return owned >= int(args.get("count", 1))
+	# This APWorld's current Send/Effect rules are all Has/And expressions.
+	# Fail closed for any future custom Rule Builder type instead of guessing.
+	return false
+
+func _boost_location_is_reachable(location_id):
+	if ap_client == null or not ap_client.missing_locations.has(int(location_id)):
+		return false
+	if not _boost_has_exported_logic():
+		return true
+	var spec = ap_client.slot_data.get("BoostLogic", {})
+	var rules = spec.get("rules", {})
+	if typeof(rules) != TYPE_DICTIONARY:
+		return false
+	var key = str(int(location_id))
+	# No local rule means the generated location uses the default True rule;
+	# this includes starting-symbol Send checks, just as in Universal Tracker.
+	if not rules.has(key):
+		return true
+	return _boost_rule_is_satisfied(rules[key])
+
 func _boost_effect_is_unfinished(rule):
 	if ap_client == null:
 		return false
 	var location_id = _floor_variant_location_id(int(rule.get("id", -1)), str(rule.get("name", "")))
 	# missing_locations is authoritative here: disabled effect locations are not
 	# in the generated seed and checked locations are already complete.
-	return location_id >= 0 and ap_client.missing_locations.has(location_id)
+	return location_id >= 0 and _boost_location_is_reachable(location_id)
 
 func _boost_effect_targets_are_requirements(rule):
 	# add/transform targets are outputs created by the source, not symbols that
@@ -987,7 +1079,7 @@ func _symbol_has_unfinished_send_check(game_type):
 	if location_ids.empty():
 		return false
 	for location_id in location_ids:
-		if ap_client.missing_locations.has(int(location_id)):
+		if _boost_location_is_reachable(int(location_id)):
 			return true
 	return false
 
@@ -1012,7 +1104,7 @@ func _build_boost_needed_symbols():
 	# weight or keep the symbol pool pruned.
 	for game_type in main.tile_database.keys():
 		var raw = str(game_type)
-		if raw == AP_CHECK_TYPE or _is_base_starting_symbol(raw) or not is_symbol_allowed_in_pool(raw):
+		if raw == AP_CHECK_TYPE or not is_symbol_allowed_in_pool(raw):
 			continue
 		if _symbol_has_unfinished_send_check(raw):
 			needed[APData.canonical_game_key_for_actual_type(raw)] = true
@@ -1898,7 +1990,7 @@ func get_effect_coverage_text():
 func send_matryoshka_base_check(game_type = "matryoshka_doll"):
 	# The first Matryoshka Send check is special because LBAL's actual symbol is
 	# usually matryoshka_doll_1 while Archipelago calls the location simply
-	# "Send: Matryoshka Doll". Send it from ANY observed Matryoshka stage as a
+	# "Send Symbol: Matryoshka Doll". Send it from ANY observed Matryoshka stage as a
 	# recovery path, so a missed reward-card callback can never leave the base
 	# check stranded after the doll has already progressed.
 	#
@@ -1912,7 +2004,7 @@ func send_matryoshka_base_check(game_type = "matryoshka_doll"):
 	var exact_key = APData.exact_game_key(game_type)
 	if not exact_key in ["matryoshka_doll", "matryoshka_doll_1", "matryoshka_doll_2", "matryoshka_doll_3", "matryoshka_doll_4", "matryoshka_doll_5"]:
 		return false
-	var base_location_name = "Send: Matryoshka Doll"
+	var base_location_name = "Send Symbol: Matryoshka Doll"
 	var resolved_location_name = _floor_variant_location_name(base_location_name)
 	var location_id = APData.location_id(resolved_location_name)
 	if location_id < 0:
@@ -1953,16 +2045,16 @@ func send_matryoshka_transition(from_type, to_type):
 	match from_key:
 		"matryoshka_doll_1":
 			pair_ids = [786, 466]
-			pair_names = ["Effect: Matryoshka Doll 1 turns into Matryoshka Doll 2", "Send: Matryoshka Doll 2"]
+			pair_names = ["Effect: Matryoshka Doll 1 turns into Matryoshka Doll 2", "Send Symbol: Matryoshka Doll 2"]
 		"matryoshka_doll_2":
 			pair_ids = [787, 467]
-			pair_names = ["Effect: Matryoshka Doll 2 turn into Matryoshka Doll 3", "Send: Matryoshka Doll 3"]
+			pair_names = ["Effect: Matryoshka Doll 2 turn into Matryoshka Doll 3", "Send Symbol: Matryoshka Doll 3"]
 		"matryoshka_doll_3":
 			pair_ids = [788, 468]
-			pair_names = ["Effect: Matryoshka Doll 3 turn into Matryoshka Doll 4", "Send: Matryoshka Doll 4"]
+			pair_names = ["Effect: Matryoshka Doll 3 turn into Matryoshka Doll 4", "Send Symbol: Matryoshka Doll 4"]
 		"matryoshka_doll_4":
 			pair_ids = [789, 469]
-			pair_names = ["Effect: Matryoshka Doll 4 turn into Matryoshka Doll 5", "Send: Matryoshka Doll 5"]
+			pair_names = ["Effect: Matryoshka Doll 4 turn into Matryoshka Doll 5", "Send Symbol: Matryoshka Doll 5"]
 		_:
 			return base_send_recovered
 
@@ -2049,7 +2141,7 @@ func send_pickup_check(game_type, source_category = ""):
 		return false
 
 	# Matryoshka's first visible LBAL stage is matryoshka_doll_1, but its base AP
-	# location is named "Send: Matryoshka Doll".  Send that named location first
+	# location is named "Send Symbol: Matryoshka Doll".  Send that named location first
 	# and independently from the generic stage mapping.  This makes the base check
 	# reliable even if the stage key has a Steam/mod suffix.
 	var exact_game_type = APData.exact_game_key(game_type)

@@ -89,8 +89,12 @@ class LBALWorld(World):
     # This is what slot_data exists for. Upon every client connection, the slot's slot_data is sent to the client.
     # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
     def fill_slot_data(self) -> Mapping[str, Any]:
+        boost_rules = getattr(self, "_lbal_boost_location_rules",{})
         # If you need access to the player's chosen options on the client side, there is a helper for that.
         return {
+                    "BoostLogic":{
+                        "version": 1, "rules": boost_rules
+                    },
                     "options":{
                         "APCheckBoost": bool(self.options.Boost.value), 
                         "Deathlink": bool(self.options.Deathlink.value), 
@@ -109,6 +113,8 @@ class LBALWorld(World):
                     }
         }
 
+        
+    
     def _restore_tracker_options(self) -> None:
         if not getattr(self.multiworld, "generation_is_fake", False):
             return
@@ -141,6 +147,8 @@ class LBALWorld(World):
 
             except (TypeError, ValueError, KeyError) as exc:
                 logging.warning("LBAL UT: cannot restore option %s=%r: %s", name, value, exc)
+
+
 
     def generate_output(self, output_directory: str):
         write_lbal_patch(self, output_directory)
