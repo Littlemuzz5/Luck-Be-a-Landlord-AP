@@ -2334,6 +2334,8 @@ def set_all_location_rules(world: LBALWorld) -> None:
 
 def set_extra_effect_rules(world: LBALWorld) -> None:
     effect_rules = {"Effect: Big Urn adds Spirit": (Has("Unlock Symbol: Hooligan") | Has("Unlock Item: Grave Robber") | Has("Unlock Essence: Grave Robber Essence")),}
+    effect_rules = {"Effect: Urn adds Spirit": (Has("Unlock Symbol: Hooligan") | Has("Unlock Item: Grave Robber") | Has("Unlock Essence: Grave Robber Essence")),}
+    effect_rules = {"Effect: Tomb adds Spirit": (Has("Unlock Symbol: Hooligan") | Has("Unlock Item: Grave Robber") | Has("Unlock Essence: Grave Robber Essence")),}
     for effect_name, extra_rule in effect_rules.items():
         for location in get_check_variants(world, effect_name):
             key = str(location.address)

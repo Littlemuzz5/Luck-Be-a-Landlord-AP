@@ -83,9 +83,6 @@ var auth_wait_log_next_msec = 0
 
 var auto_goal_enabled = true
 var text_client_enabled = false
-# Feed filter modes:
-# 0 = everything, 1 = progression + useful, 2 = progression only,
-# 3 = my items (items sent to this slot OR sent out from this slot's checks).
 var text_client_filter_mode = 0
 var text_client_lines = []
 var text_client_rich_lines = []
@@ -93,10 +90,6 @@ var text_client_line_seqs = []
 var text_client_line_meta = []
 var text_client_next_seq = 0
 
-# PrintJSON uses numeric player/item/location IDs. Keep enough of the AP room
-# metadata to turn those IDs into the same readable names the normal TextClient
-# shows. Data packages are requested lazily per game so large multiworlds do not
-# download hundreds of game tables just to render the feed.
 var player_names = {0: "Archipelago"}
 var player_games = {0: "Archipelago"}
 var item_names_by_game = {}
@@ -104,19 +97,13 @@ var location_names_by_game = {}
 var requested_data_package_games = []
 var pending_print_json = []
 const MAX_PENDING_PRINT_JSON = 50
-
-# Slot/YAML-backed session options. The in-game AP menu can override the two
-# booleans for the current connection without changing the generated YAML.
 var ap_check_boost_enabled = false
 var deathlink_enabled = false
-# 0 = Force Payment, 1 = End Run (matches options.py Payment Choice).
 var deathlink_mode = 1
-
 var deathlink_send_amnesty = 0
 var deathlink_receive_amnesty = 0
 var deathlink_send_amnesty_remaining = 0
 var deathlink_receive_amnesty_remaining = 0
-
 var deathlink_send_handled_this_run = false
 var deathlink_remote_end_run_active = false
 var last_deathlink_received_time = -1.0
@@ -134,9 +121,6 @@ func _ready():
 func _process(delta):
 	if socket != null and socket.get_connection_status() != NetworkedMultiplayerPeer.CONNECTION_DISCONNECTED:
 		socket.poll()
-		# Some very large multiworld servers can queue the Connected packet without
-		# Godot 3.4 emitting data_received reliably. Drain the peer after every poll
-		# as a fallback. _on_data_received() is safe to call when the queue is empty.
 		_on_data_received()
 
 	# While authenticating, keep a low-frequency breadcrumb in the debug log so
@@ -164,12 +148,7 @@ func _make_socket():
 	socket = WebSocketClient.new()
 	# Must be configured before connect_to_url(). 16 MiB leaves plenty of room
 	# for Connected/RoomUpdate packets from older floor-dependent LBAL worlds.
-	var buffer_err = socket.set_buffers(
-		WS_INPUT_BUFFER_KB,
-		WS_INPUT_MAX_PACKETS,
-		WS_OUTPUT_BUFFER_KB,
-		WS_OUTPUT_MAX_PACKETS
-	)
+	var buffer_err = socket.set_buffers(WS_INPUT_BUFFER_KB, WS_INPUT_MAX_PACKETS, WS_OUTPUT_BUFFER_KB, WS_OUTPUT_MAX_PACKETS)
 	if buffer_err == OK:
 		_log("WEBSOCKET BUFFERS input_kb=" + str(WS_INPUT_BUFFER_KB) + " input_packets=" + str(WS_INPUT_MAX_PACKETS) + " output_kb=" + str(WS_OUTPUT_BUFFER_KB) + " output_packets=" + str(WS_OUTPUT_MAX_PACKETS))
 	else:
@@ -1129,8 +1108,8 @@ func _bbcode_escape(value):
 	var text = str(value)
 	text = text.replace("[", "__AP_LBRACKET__")
 	text = text.replace("]", "__AP_RBRACKET__")
-	text = text.replace("__AP_LBRACKET__", "[lb]")
-	text = text.replace("__AP_RBRACKET__", "[rb]")
+	text = text.replace("__AP_LBRACKET__", "(")
+	text = text.replace("__AP_RBRACKET__", ")")
 	return text
 
 func _next_text_client_seq():

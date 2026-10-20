@@ -152,14 +152,6 @@ class LBALWorld(World):
 
     def generate_output(self, output_directory: str):
         write_lbal_patch(self, output_directory)
-
-    @staticmethod
-    def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
-        return slot_data
-
-
-    def generate_early(self) -> None:
-        self._restore_tracker_options()
         selected_floors = [1, *sorted(int(floor) for floor in self.options.Floors.value)]
         payment_checks = sum(1 for floor in selected_floors for payment in range(1, 13) if f"Floor {floor} Payment {payment}" in self.location_name_to_id)
         ap_checks = sum(1 for name in self.location_name_to_id if name.startswith("AP Check "))
@@ -171,3 +163,13 @@ class LBALWorld(World):
         logging.info(f"AP Checks: {ap_checks:,}")
         logging.info(f"Calculated total checks: {total_checks:,}")
         logging.info("================================")
+
+    @staticmethod
+    def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+        return slot_data
+        
+
+
+    def generate_early(self) -> None:
+        self._restore_tracker_options()
+    

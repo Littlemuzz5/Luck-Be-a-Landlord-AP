@@ -2,7 +2,6 @@ import json
 import os
 import pkgutil
 from worlds.Files import APProcedurePatch, APPatchExtension
-from tkinter import Tk, filedialog
 from pathlib import Path
 import tempfile
 import shutil
@@ -85,6 +84,7 @@ class LBALContentPatch(APProcedurePatch):
 
     @classmethod
     def get_source_data(cls):
+        from tkinter import Tk, filedialog
         root = Tk()
         root.withdraw()
         root.attributes("-topmost", True)

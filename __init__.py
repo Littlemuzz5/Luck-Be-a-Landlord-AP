@@ -1,25 +1,18 @@
 from .world import LBALWorld
 from .lbal_patch import LBALContentPatch, LBALPatchExtension
-
-from worlds.LauncherComponents import (
-    Component,
-    Type,
-    SuffixIdentifier,
-    components,
-)
-
+from Patch import create_rom_file
+from worlds.LauncherComponents import (Component, Type, SuffixIdentifier, components,)
+from os.path import isfile
+from Utils import open_filename, messagebox
+from worlds.LauncherComponents import (components as registered_components, SuffixIdentifier, Type, identify, get_exe,)
+from Launcher import launch as launch_exe
+import traceback
 
 def open_lbal_patch(patch_path=None):
-    """Run the normal Archipelago patch dispatcher for LBAL patches."""
-    import traceback
-    from Patch import create_rom_file
-
     try:
         if not patch_path:
             from Utils import open_filename
-            patch_path = open_filename(
-                "Select LBAL Patch", (("LBAL Patch", (".aplbal",)),)
-            )
+            patch_path = open_filename("Select LBAL Patch", (("LBAL Patch", (".aplbal",)),))
         if not patch_path:
             return
         print("LBAL: Starting patch:", patch_path, flush=True)
@@ -30,31 +23,11 @@ def open_lbal_patch(patch_path=None):
         traceback.print_exc()
 
 
-# HIDDEN prevents a standalone LBAL Client button in the Launcher.
-lbal_component = Component(
-    "Luck be a Landlord Patch Handler",
-    component_type=Type.HIDDEN,
-    func=open_lbal_patch,
-    file_identifier=SuffixIdentifier(".aplbal"),
-)
+
+lbal_component = Component(display_name="Luck be a Landlord", component_type=Type.HIDDEN, func=open_lbal_patch,file_identifier=SuffixIdentifier(".aplbal"),)
 components.append(lbal_component)
 
-
 def open_patch_with_lbal():
-    """Archipelago 0.6.8 Open Patch, including hidden LBAL patch support.
-
-    Keep the LBAL handler hidden at all times. The normal launcher will find
-    the handler from its file suffix after the dialog closes, even when running
-    the patch in a new process.
-    """
-    from os.path import isfile
-    from Utils import open_filename, messagebox
-    from worlds.LauncherComponents import (
-        components as registered_components,
-        SuffixIdentifier, Type, identify, get_exe,
-    )
-    from Launcher import launch as launch_exe
-
     suffixes = []
     for component in registered_components:
         if component.type == Type.CLIENT and isinstance(component.file_identifier, SuffixIdentifier):
@@ -70,8 +43,6 @@ def open_patch_with_lbal():
     if not path:
         return
 
-    # Handle LBAL in the current process: its patcher asks for the game PCK
-    # and prints any error to this launcher's console.
     if str(path).lower().endswith(".aplbal"):
         open_lbal_patch(path)
         return
@@ -87,7 +58,6 @@ def open_patch_with_lbal():
     launch_exe([*executable, file_path], component.cli)
 
 
-# Only replace the existing Open Patch action, not the launcher component list.
 for component in components:
     if component.display_name == "Open Patch":
         component.func = open_patch_with_lbal
