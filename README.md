@@ -10,7 +10,7 @@ The Client was made with alot of help by Ai which will be changing soon just wan
  
 
 Setup
-- Download the Archipelgo Launcher 0.6.7 or later client from https://github.com/ArchipelagoMW/Archipelago/releases
+- Download the Archipelgo Launcher 0.6.8 or later client from https://github.com/ArchipelagoMW/Archipelago/releases
 - Install the AP world by placing it in your custom worlds folder or double clicking the AP world or by using the inbuilt install AP world in the Archipelgo Client
 - Go to Options Creator and find the Luck be a Landlord tab to make the .yaml file
 - Generate a seed by putting the yaml file in the players folder and clicking the Generate button in the Archipelgo Client
